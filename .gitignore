@@ -16,18 +16,6 @@ logs/
 # │                Локальные конфиги и секреты               │
 # └──────────────────────────────────────────────────────────┘
 
-# Локальные свойства и конфиги
-application-local.yml
-application-local.yaml
-application-dev.yml
-application-dev.yaml
-application-test.yml
-application-test.yaml
-
-# Основной application.yml/yaml
-application.yml
-application.yaml
-
 # Файлы окружения
 .env
 .env.local
