@@ -1,18 +1,17 @@
 package com.gordeev.postgresql.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class ApiError {
-    private String message;
-    private String code;
-    private LocalDateTime timestamp = LocalDateTime.now();
+    @NonNull
+    private final String message;
+
+    @NonNull
+    private final String code;
+
+    private final LocalDateTime timestamp = LocalDateTime.now();
 }

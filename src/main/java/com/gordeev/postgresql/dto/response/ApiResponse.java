@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class ApiResponse<T> {
     private boolean success; // Статус ответа
     private T data; // Успех
-    private ApiError error; // Провал
+    private ApiError error; // Ошибка
     private final LocalDateTime timestamp = LocalDateTime.now(); // Дата
 
     // Ответ при успехе
