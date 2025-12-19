@@ -1,4 +1,4 @@
-package com.gordeev.postgresql.entity;
+package com.gordeev.postgresql.user.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

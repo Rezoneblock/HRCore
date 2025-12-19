@@ -1,4 +1,4 @@
-package com.gordeev.postgresql.dto.request;
+package com.gordeev.postgresql.user.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 

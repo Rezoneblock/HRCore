@@ -1,4 +1,4 @@
-package com.gordeev.postgresql.dto.response;
+package com.gordeev.postgresql.user.dto.response;
 
 import java.time.LocalDateTime;
 

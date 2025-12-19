@@ -1,10 +1,13 @@
-package com.gordeev.postgresql.repository;
+package com.gordeev.postgresql.user.repository;
 
-import com.gordeev.postgresql.entity.User;
+import com.gordeev.postgresql.user.entity.User;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface UserRepository extends JpaRepository<@NonNull User, @NonNull Long> {
+    Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);
     boolean existsByUsername(String username);
 }

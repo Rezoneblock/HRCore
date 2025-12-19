@@ -1,4 +1,4 @@
-package com.gordeev.postgresql.dto.response;
+package com.gordeev.postgresql.common.dto;
 
 import lombok.Getter;
 
@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class ApiResponse<T> {
+    // Тело ответа:
     private boolean success; // Статус ответа
     private T data; // Успех
     private ApiError error; // Ошибка
@@ -20,8 +21,8 @@ public class ApiResponse<T> {
     }
 
     // Ответ при ошибке
-    public static <T> ApiResponse<T> error(ApiError error) {
-        ApiResponse<T> response = new ApiResponse<>();
+    public static ApiResponse<Void> error(ApiError error) {
+        ApiResponse<Void> response = new ApiResponse<>();
         response.success = false;
         response.error = error;
         return response;
