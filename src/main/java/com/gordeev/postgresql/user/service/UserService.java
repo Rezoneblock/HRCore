@@ -3,8 +3,8 @@ package com.gordeev.postgresql.user.service;
 import com.gordeev.postgresql.user.dto.request.UserCreateRequest;
 import com.gordeev.postgresql.user.dto.response.UserResponse;
 import com.gordeev.postgresql.user.entity.User;
-import com.gordeev.postgresql.common.exception.EmailAlreadyExistsException;
-import com.gordeev.postgresql.common.exception.NotFoundException;
+import com.gordeev.postgresql.user.exception.EmailAlreadyExistsException;
+import com.gordeev.postgresql.user.exception.UserNotFoundException;
 import com.gordeev.postgresql.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +19,7 @@ public class UserService {
 
     public UserResponse findById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User with id " + id + " does not exist"));
+                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " does not exist"));
         return new UserResponse(
                 user.getId(),
                 user.getUsername(),
@@ -32,7 +32,7 @@ public class UserService {
     }
 
     public UserResponse findByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User with email: " + email + " does not exist"));
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User with email: " + email + " does not exist"));
         return new UserResponse(
                 user.getId(),
                 user.getUsername(),

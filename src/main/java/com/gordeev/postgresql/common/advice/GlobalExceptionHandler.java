@@ -2,7 +2,8 @@ package com.gordeev.postgresql.common.advice;
 
 import com.gordeev.postgresql.common.dto.ApiError;
 import com.gordeev.postgresql.common.dto.ApiResponse;
-import com.gordeev.postgresql.common.exception.EmailAlreadyExistsException;
+import com.gordeev.postgresql.common.exception.BusinessException;
+import com.gordeev.postgresql.user.exception.EmailAlreadyExistsException;
 import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,4 +20,6 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+
+    public ResponseError
 }

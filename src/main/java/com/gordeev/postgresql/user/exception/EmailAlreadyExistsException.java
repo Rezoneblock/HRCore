@@ -1,4 +1,4 @@
-package com.gordeev.postgresql.common.exception;
+package com.gordeev.postgresql.user.exception;
 
 import lombok.Getter;
 
