@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -20,6 +22,14 @@ public class UserController {
     public ResponseEntity<@NonNull ApiResponse<UserResponse>> getUserByEmail(@RequestParam String email) {
         UserResponse user = userService.findByEmail(email);
         ApiResponse<UserResponse> response = ApiResponse.success(user);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<@NonNull ApiResponse<List<UserResponse>>> getAllUsers() {
+        List<UserResponse> allUsers = userService.getAllUsers();
+        ApiResponse<List<UserResponse>> response = ApiResponse.success(allUsers);
 
         return ResponseEntity.ok(response);
     }

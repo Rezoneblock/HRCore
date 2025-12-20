@@ -9,6 +9,9 @@ import com.gordeev.postgresql.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -16,6 +19,26 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
+    private UserResponse userToResponse(User user) {
+        UserResponse dto = new UserResponse();
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+        dto.setEmail(user.getEmail());
+        dto.setFirstname(user.getFirstname());
+        dto.setLastname(user.getLastname());
+        dto.setCreatedAt(user.getCreatedAt());
+        dto.setUpdatedAt(user.getUpdatedAt());
+        return dto;
+    }
+
+    public List<UserResponse> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(this::userToResponse)
+                .collect(Collectors.toList());
+    }
+
 
     public UserResponse findById(Long id) {
         User user = userRepository.findById(id)
