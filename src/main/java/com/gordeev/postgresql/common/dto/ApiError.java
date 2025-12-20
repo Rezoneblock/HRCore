@@ -5,7 +5,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class ApiError {
     @NonNull
     private final String message;
@@ -13,5 +13,4 @@ public class ApiError {
     @NonNull
     private final String code;
 
-    private final LocalDateTime timestamp = LocalDateTime.now();
 }

@@ -1,30 +1,30 @@
 package com.gordeev.postgresql.common.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<T> {
-    // Тело ответа:
-    private boolean success; // Статус ответа
-    private T data; // Успех
-    private ApiError error; // Ошибка
-    private final LocalDateTime timestamp = LocalDateTime.now(); // Дата
+    private final Boolean success;
+    private final T data;
+    private final ApiError error;
+    private final LocalDateTime timestamp = LocalDateTime.now();
 
-    // Ответ при успехе
-    public static <T> ApiResponse<T> success(T data) {
-        ApiResponse<T> response = new ApiResponse<>();
-        response.success = true;
-        response.data = data;
-        return response;
+    private ApiResponse(Boolean success, T data, ApiError error) {
+        this.success = success;
+        this.data = data;
+        this.error = error;
     }
 
-    // Ответ при ошибке
+    public static <T> ApiResponse<T> success(T data) {
+        return new ApiResponse<>(true, data, null);
+    }
+
     public static ApiResponse<Void> error(ApiError error) {
-        ApiResponse<Void> response = new ApiResponse<>();
-        response.success = false;
-        response.error = error;
-        return response;
+        return new ApiResponse<>(false, null, error);
     }
 }

@@ -19,7 +19,7 @@ public class UserService {
 
     public UserResponse findById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " does not exist"));
+                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " does not exists"));
         return new UserResponse(
                 user.getId(),
                 user.getUsername(),
@@ -32,7 +32,7 @@ public class UserService {
     }
 
     public UserResponse findByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User with email: " + email + " does not exist"));
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User with email: " + email + " does not exists"));
         return new UserResponse(
                 user.getId(),
                 user.getUsername(),
@@ -48,7 +48,7 @@ public class UserService {
     public UserResponse createUser(UserCreateRequest request) {
 
         if (userRepository.existsByEmail(request.email())) {
-            throw new EmailAlreadyExistsException("Email already exists");
+            throw new EmailAlreadyExistsException("User with email: '" + request.email() + "' already exists");
         }
 
         User user = User.builder()
