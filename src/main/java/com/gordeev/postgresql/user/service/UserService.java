@@ -6,6 +6,10 @@ import com.gordeev.postgresql.user.entity.User;
 import com.gordeev.postgresql.user.exception.EmailAlreadyExistsException;
 import com.gordeev.postgresql.user.exception.UserNotFoundException;
 import com.gordeev.postgresql.user.repository.UserRepository;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,12 +17,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     private UserResponse userToResponse(User user) {
         UserResponse dto = new UserResponse();
@@ -39,32 +41,26 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    public Page<@NonNull UserResponse> getUsersPageable(Pageable pageable) {
+        if (pageable == null) {
+            throw new IllegalArgumentException("Pageable не может быть null");
+        }
+
+        Page<@NonNull User> page = userRepository.findAll(pageable);
+
+        return page.map(this::userToResponse);
+    }
+
 
     public UserResponse findById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " does not exists"));
-        return new UserResponse(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getFirstname(),
-                user.getLastname(),
-                user.getCreatedAt(),
-                user.getUpdatedAt()
-        );
+        return userToResponse(user);
     }
 
     public UserResponse findByEmail(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User with email: " + email + " does not exists"));
-        return new UserResponse(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getFirstname(),
-                user.getLastname(),
-                user.getCreatedAt(),
-                user.getUpdatedAt()
-        );
+        return userToResponse(user);
     }
 
     @Transactional
@@ -84,14 +80,6 @@ public class UserService {
 
         User savedUser = userRepository.save(user);
 
-        return new UserResponse(
-                savedUser.getId(),
-                savedUser.getUsername(),
-                savedUser.getEmail(),
-                savedUser.getFirstname(),
-                savedUser.getLastname(),
-                savedUser.getCreatedAt(),
-                savedUser.getUpdatedAt()
-        );
+        return userToResponse(savedUser);
     }
 }

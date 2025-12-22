@@ -6,6 +6,10 @@ import com.gordeev.postgresql.user.dto.response.UserResponse;
 import com.gordeev.postgresql.user.service.UserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,18 +22,21 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/by-email")
-    public ResponseEntity<@NonNull ApiResponse<UserResponse>> getUserByEmail(@RequestParam String email) {
-        UserResponse user = userService.findByEmail(email);
-        ApiResponse<UserResponse> response = ApiResponse.success(user);
+    @GetMapping("/all")
+    public ResponseEntity<@NonNull ApiResponse<List<UserResponse>>> getAllUsers() {
+        List<UserResponse> allUsers = userService.getAllUsers();
+        ApiResponse<List<UserResponse>> response = ApiResponse.success(allUsers);
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping
-    public ResponseEntity<@NonNull ApiResponse<List<UserResponse>>> getAllUsers() {
-        List<UserResponse> allUsers = userService.getAllUsers();
-        ApiResponse<List<UserResponse>> response = ApiResponse.success(allUsers);
+    public ResponseEntity<@NonNull ApiResponse<@NonNull Page<@NonNull UserResponse>>> getUsers(
+            @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
+    ) {
+        Page<@NonNull UserResponse> page = userService.getUsersPageable(pageable);
+
+        ApiResponse<Page<@NonNull UserResponse>> response = ApiResponse.success(page);
 
         return ResponseEntity.ok(response);
     }
@@ -40,6 +47,14 @@ public class UserController {
         ApiResponse<UserResponse> response = ApiResponse.success(newUser);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/by-email")
+    public ResponseEntity<@NonNull ApiResponse<UserResponse>> getUserByEmail(@RequestParam String email) {
+        UserResponse user = userService.findByEmail(email);
+        ApiResponse<UserResponse> response = ApiResponse.success(user);
+
+        return ResponseEntity.ok(response);
     }
 
 }
