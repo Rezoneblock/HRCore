@@ -87,4 +87,11 @@ public class UserService {
 
         return userToResponse(savedUser);
     }
+
+    @Transactional
+    public void deleteByEmail(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User with email: " + email + " does not exists"));
+
+        userRepository.delete(user);
+    }
 }
