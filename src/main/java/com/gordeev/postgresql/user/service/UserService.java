@@ -5,6 +5,7 @@ import com.gordeev.postgresql.user.dto.response.UserResponse;
 import com.gordeev.postgresql.user.entity.User;
 import com.gordeev.postgresql.user.exception.EmailAlreadyExistsException;
 import com.gordeev.postgresql.user.exception.UserNotFoundException;
+import com.gordeev.postgresql.user.exception.UsersPageEmptyException;
 import com.gordeev.postgresql.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,10 @@ public class UserService {
         }
 
         Page<@NonNull User> page = userRepository.findAll(pageable);
+
+        if (page.isEmpty()) {
+            throw new UsersPageEmptyException("page=" + pageable.getPageNumber() + " and size=" + pageable.getPageSize() + " does not exists");
+        }
 
         return page.map(this::userToResponse);
     }

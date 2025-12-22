@@ -35,7 +35,6 @@ public class UserController {
             @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
     ) {
         Page<@NonNull UserResponse> page = userService.getUsersPageable(pageable);
-
         ApiResponse<Page<@NonNull UserResponse>> response = ApiResponse.success(page);
 
         return ResponseEntity.ok(response);
