@@ -24,8 +24,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    @PersistenceContext
-    private final EntityManager entityManager;
 
     // GET Users via pageable
     @GetMapping
