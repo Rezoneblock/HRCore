@@ -123,7 +123,7 @@ public class UserService {
             if (request.username().equals(user.getUsername())) {
                 throw new ResourceAlreadyExistsException("New username can't be same as old one");
             } else { // Проверка на уникальность новой почты
-                if (userRepository.existsByEmail(request.username())) {
+                if (userRepository.existsByUsername(request.username())) {
                     throw new ResourceAlreadyExistsException("User with username: '" + request.username() + "' already exists");
                 }
             }

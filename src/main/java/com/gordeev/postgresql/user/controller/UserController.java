@@ -5,8 +5,6 @@ import com.gordeev.postgresql.user.dto.request.UserCreateRequest;
 import com.gordeev.postgresql.user.dto.request.UserUpdateRequest;
 import com.gordeev.postgresql.user.dto.response.UserResponse;
 import com.gordeev.postgresql.user.service.UserService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
