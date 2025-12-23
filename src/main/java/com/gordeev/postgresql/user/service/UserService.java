@@ -62,15 +62,8 @@ public class UserService {
         return page.map(this::userToResponse);
     }
 
-
-    public UserResponse findById(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " does not exists"));
-        return userToResponse(user);
-    }
-
-    public UserResponse findByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User with email: " + email + " does not exists"));
+    public UserResponse findByUsername(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User with username: " + username + " does not exists"));
         return userToResponse(user);
     }
 

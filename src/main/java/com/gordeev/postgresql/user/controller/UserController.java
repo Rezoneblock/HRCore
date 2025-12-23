@@ -35,9 +35,9 @@ public class UserController {
     }
 
     // GET User via email
-    @GetMapping("/by-email")
-    public ResponseEntity<ApiResponse<UserResponse>> getUserByEmail(@RequestParam String email) {
-        UserResponse user = userService.findByEmail(email);
+    @GetMapping("/{username}")
+    public ResponseEntity<ApiResponse<UserResponse>> getUserByEmail(@PathVariable String username) {
+        UserResponse user = userService.findByUsername(username);
         ApiResponse<UserResponse> response = ApiResponse.success(user);
 
         return ResponseEntity.ok(response);
