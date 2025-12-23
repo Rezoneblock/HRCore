@@ -1,11 +1,13 @@
 package com.gordeev.postgresql.user.service;
 
 import com.gordeev.postgresql.user.dto.request.UserCreateRequest;
+import com.gordeev.postgresql.user.dto.request.UserUpdateRequest;
 import com.gordeev.postgresql.user.dto.response.UserResponse;
 import com.gordeev.postgresql.user.entity.User;
-import com.gordeev.postgresql.user.exception.EmailAlreadyExistsException;
+import com.gordeev.postgresql.user.exception.ResourceAlreadyExistsException;
 import com.gordeev.postgresql.user.exception.UserNotFoundException;
 import com.gordeev.postgresql.user.exception.UsersPageEmptyException;
+import com.gordeev.postgresql.user.mapper.UserMapper;
 import com.gordeev.postgresql.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.filter.RequestContextFilter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +25,9 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
+
+    private final RequestContextFilter requestContextFilter;
 
     private UserResponse userToResponse(User user) {
         UserResponse dto = new UserResponse();
@@ -72,7 +78,7 @@ public class UserService {
     public UserResponse createUser(UserCreateRequest request) {
 
         if (userRepository.existsByEmail(request.email())) {
-            throw new EmailAlreadyExistsException("User with email: '" + request.email() + "' already exists");
+            throw new ResourceAlreadyExistsException("User with email: '" + request.email() + "' already exists");
         }
 
         User user = User.builder()
@@ -93,5 +99,40 @@ public class UserService {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User with email: " + email + " does not exists"));
 
         userRepository.delete(user);
+    }
+
+    @Transactional
+    public UserResponse partialUpdateUser(Long id, UserUpdateRequest request) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id: " + id + " does not exists"));
+
+        // Если есть замена почты
+        if (request.email() != null) {
+            // Проверка на совпадение со старой почтой (нельзя)
+            if (request.email().equals(user.getEmail())) {
+                throw new ResourceAlreadyExistsException("New email can't be same as old one");
+            } else { // Проверка на уникальность новой почты
+                if (userRepository.existsByEmail(request.email())) {
+                    throw new ResourceAlreadyExistsException("User with email: '" + request.email() + "' already exists");
+                }
+            }
+        }
+
+        // Если есть замена почты
+        if (request.username() != null) {
+            // Проверка на совпадение со старой почтой (нельзя)
+            if (request.username().equals(user.getUsername())) {
+                throw new ResourceAlreadyExistsException("New username can't be same as old one");
+            } else { // Проверка на уникальность новой почты
+                if (userRepository.existsByEmail(request.username())) {
+                    throw new ResourceAlreadyExistsException("User with username: '" + request.username() + "' already exists");
+                }
+            }
+        }
+
+        userMapper.updateUserFromRequest(request, user);
+
+        User updatedUser = userRepository.save(user);
+
+        return userMapper.toDto(updatedUser);
     }
 }

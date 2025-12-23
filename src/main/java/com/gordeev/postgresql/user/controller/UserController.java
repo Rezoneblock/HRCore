@@ -2,11 +2,12 @@ package com.gordeev.postgresql.user.controller;
 
 import com.gordeev.postgresql.common.dto.ApiResponse;
 import com.gordeev.postgresql.user.dto.request.UserCreateRequest;
+import com.gordeev.postgresql.user.dto.request.UserUpdateRequest;
 import com.gordeev.postgresql.user.dto.response.UserResponse;
 import com.gordeev.postgresql.user.service.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import lombok.NonNull;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,18 +29,18 @@ public class UserController {
 
     // GET Users via pageable
     @GetMapping
-    public ResponseEntity<@NonNull ApiResponse<@NonNull Page<@NonNull UserResponse>>> getUsers(
+    public ResponseEntity<ApiResponse<Page<UserResponse>>> getUsers(
             @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
     ) {
-        Page<@NonNull UserResponse> page = userService.getUsersPageable(pageable);
-        ApiResponse<Page<@NonNull UserResponse>> response = ApiResponse.success(page);
+        Page<UserResponse> page = userService.getUsersPageable(pageable);
+        ApiResponse<Page<UserResponse>> response = ApiResponse.success(page);
 
         return ResponseEntity.ok(response);
     }
 
     // GET User via email
     @GetMapping("/by-email")
-    public ResponseEntity<@NonNull ApiResponse<UserResponse>> getUserByEmail(@RequestParam String email) {
+    public ResponseEntity<ApiResponse<UserResponse>> getUserByEmail(@RequestParam String email) {
         UserResponse user = userService.findByEmail(email);
         ApiResponse<UserResponse> response = ApiResponse.success(user);
 
@@ -48,7 +49,7 @@ public class UserController {
 
     // GET all Users
     @GetMapping("/all")
-    public ResponseEntity<@NonNull ApiResponse<List<UserResponse>>> getAllUsers() {
+    public ResponseEntity<ApiResponse<List<UserResponse>>> getAllUsers() {
         List<UserResponse> allUsers = userService.getAllUsers();
         ApiResponse<List<UserResponse>> response = ApiResponse.success(allUsers);
 
@@ -57,7 +58,7 @@ public class UserController {
 
     // Create User
     @PostMapping
-    public ResponseEntity<@NonNull ApiResponse<UserResponse>> createUser(@RequestBody UserCreateRequest request) {
+    public ResponseEntity<ApiResponse<UserResponse>> createUser(@RequestBody UserCreateRequest request) {
         UserResponse newUser = userService.createUser(request);
         ApiResponse<UserResponse> response = ApiResponse.success(newUser);
 
@@ -66,10 +67,19 @@ public class UserController {
 
     // Delete User via email
     @DeleteMapping("/by-email")
-    public ResponseEntity<@NonNull ApiResponse<Void>> deleteUser(@RequestParam String email) {
+    public ResponseEntity<Void> deleteUser(@RequestParam String email) {
         userService.deleteByEmail(email);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiResponse<UserResponse>> updateUser(@PathVariable Long id, @RequestBody @Valid UserUpdateRequest request) {
+        UserResponse user = userService.partialUpdateUser(id, request);
+
+        ApiResponse<UserResponse> response = ApiResponse.success(user);
+
+        return ResponseEntity.ok(response);
     }
 
 }

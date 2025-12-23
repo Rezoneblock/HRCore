@@ -1,14 +1,12 @@
 package com.gordeev.postgresql.user.dto.request;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public record UserUpdateRequest(
-        @NotBlank(message = "username обязателен")
-        String username,
-
-        @NotBlank(message = "email обязателен")
+        @Email
         String email,
-
+        String username,
         String firstname,
         String lastname
 ) {
