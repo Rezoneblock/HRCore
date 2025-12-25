@@ -9,16 +9,26 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.gordeev</groupId>
-	<artifactId>postgresql</artifactId>
+	<artifactId>hrcore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>postgresql</name>
-	<description>PostgresqlWithSpring</description>
+	<name>HRCore</name>
+	<description>HCM (Human Capital Management) project</description>
 	<url/>
+
 	<licenses>
 		<license/>
 	</licenses>
+
 	<developers>
-		<developer/>
+		<developer>
+            <name>Gordeev Timur</name>
+            <email>trew.tr2019@yandex.ru</email>
+            <url>https://github.com/Rezoneblock</url>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+
 	</developers>
 	<scm>
 		<connection/>
