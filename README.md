@@ -1,2 +1,2 @@
-# spring-postgresql
-CRUD API
+# HRCore
+HCM (Human Capital Management) project.
