@@ -1,0 +1,22 @@
+package com.gordeev.HRM.common.advice;
+
+import com.gordeev.HRM.common.dto.ApiError;
+import com.gordeev.HRM.common.dto.ApiResponse;
+import com.gordeev.HRM.common.exception.BusinessException;
+import lombok.NonNull;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<@NonNull ApiResponse<Void>> handleBusinessException(BusinessException ex) {
+        ApiError error = new ApiError(ex.getMessage(), ex.getErrorCode());
+        ApiResponse<Void> response = ApiResponse.error(error);
+
+        return ResponseEntity.status(ex.getHttpStatus()).body(response);
+    }
+
+}

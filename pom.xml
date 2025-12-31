@@ -9,10 +9,10 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.gordeev</groupId>
-	<artifactId>hrcore</artifactId>
+	<artifactId>hrm-system</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>HRCore</name>
-	<description>HCM (Human Capital Management) project</description>
+	<name>HRM</name>
+	<description>HRM (Human Resource Management) project</description>
 	<url/>
 
 	<licenses>

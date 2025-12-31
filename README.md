@@ -1,2 +1,2 @@
-# HRCore
-HCM (Human Capital Management) project.
+# HRM
+### HRM (Human Resource Managemen) project
