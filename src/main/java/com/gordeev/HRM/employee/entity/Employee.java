@@ -18,12 +18,12 @@ public class Employee {
 
     private LocalDate hireDate;
 
-    @OneToOne(mappedBy = "employee")
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
     private EmployeePersonalData personalData;
 
-    @OneToOne(mappedBy = "employee")
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
     private EmployeeContacts contacts;
 
-    @OneToOne(mappedBy = "employee")
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
     private EmploymentDetails employmentDetails;
 }
