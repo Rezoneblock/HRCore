@@ -2,9 +2,7 @@ package com.gordeev.HRM.employee.dto;
 
 import com.gordeev.HRM.common.enums.Departments;
 import com.gordeev.HRM.common.enums.EmploymentTypes;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +17,7 @@ import java.time.LocalDate;
 @Builder
 public class CreateEmployeeRequest {
     // Personal Data
-    @NotBlank
+    @NotBlank(message = "ФИО обязательно")
     private String fullName;
     @Past
     private LocalDate birthDate;
@@ -29,14 +27,20 @@ public class CreateEmployeeRequest {
     private String address;
 
     // Contacts
+    @NotBlank(message = "phone обязателен")
     private String phone;
     @Email
+    @NotBlank(message = "email обязателен")
     private String email;
 
     // Details
+    @NotBlank(message = "Дата приёма на работу обязательна")
+    @PastOrPresent
+    private LocalDate hireDate;
     private String position;
     private Departments department;
     private EmploymentTypes employmentType;
+    @DecimalMin("0.00")
     private BigDecimal salary;
 
 }

@@ -4,7 +4,6 @@ import com.gordeev.HRM.common.enums.EmployeeStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -32,7 +31,6 @@ public class Employee {
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
 
     private EmploymentDetails employmentDetails;
-
 
 
     public void setPersonalData(EmployeePersonalData data) {
