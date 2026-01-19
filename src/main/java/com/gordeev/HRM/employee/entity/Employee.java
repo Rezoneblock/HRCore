@@ -12,7 +12,6 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Employee {
     @Id
     @GeneratedValue
@@ -29,7 +28,6 @@ public class Employee {
     private EmployeeContacts contacts;
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
-
     private EmploymentDetails employmentDetails;
 
 
@@ -47,7 +45,7 @@ public class Employee {
         }
     }
 
-    public void setDetails (EmploymentDetails details) {
+    public void setEmploymentDetails (EmploymentDetails details) {
         this.employmentDetails = details;
         if (details != null) {
             employmentDetails.setEmployee(this);

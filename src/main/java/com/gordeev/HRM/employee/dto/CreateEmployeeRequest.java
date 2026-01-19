@@ -3,15 +3,14 @@ package com.gordeev.HRM.employee.dto;
 import com.gordeev.HRM.common.enums.Departments;
 import com.gordeev.HRM.common.enums.EmploymentTypes;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

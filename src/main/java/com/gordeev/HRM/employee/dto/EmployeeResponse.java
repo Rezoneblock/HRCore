@@ -2,14 +2,15 @@ package com.gordeev.HRM.employee.dto;
 
 import com.gordeev.HRM.common.enums.Departments;
 import com.gordeev.HRM.common.enums.EmployeeStatus;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
+@Getter
+@Setter
 @Builder
 public class EmployeeResponse {
     private UUID id;
@@ -26,7 +27,7 @@ public class EmployeeResponse {
 
     // Details
     private String position;
-    private Departments departments;
+    private Departments department;
     private BigDecimal salary;
     private LocalDate hireDate;
 }

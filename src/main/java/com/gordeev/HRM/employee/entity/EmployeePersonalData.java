@@ -27,7 +27,7 @@ public class EmployeePersonalData {
     private Employee employee;
 
     @NotBlank
-    @Column(length = 40)
+    @Column(length = 40, nullable = false)
     private String fullName;
 
     @Column(length = 7)
