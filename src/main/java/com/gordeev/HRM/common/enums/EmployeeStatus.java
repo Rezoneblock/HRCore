@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum EmployeeStatus {
+    ONBOARDING("Трудоустройство"),
     ACTIVE("Работает"),
     ON_VACATION("В отпуске"),
     ON_SICK_LEAVE("На больничном"),

@@ -16,6 +16,8 @@ public class EmployeeService {
     private final EmployeeMapper employeeMapper;
 
     public EmployeeResponse createEmployee(CreateEmployeeRequest request) {
+//        System.out.println(request.getDepartment());
+//        System.out.println(request.getSex());
         Employee employee = employeeMapper.toEmployee(request);
 
         if (employee.getPersonalData() != null) {

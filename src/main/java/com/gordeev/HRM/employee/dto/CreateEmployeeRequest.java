@@ -9,8 +9,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -33,7 +31,7 @@ public class CreateEmployeeRequest {
     private String email;
 
     // Details
-    @NotBlank(message = "Дата приёма на работу обязательна")
+    @NotNull(message = "Дата приёма на работу обязательна")
     @PastOrPresent
     private LocalDate hireDate;
     private String position;

@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface EmployeeMapper {
-    @Mapping(target = "status", constant = "ACTIVE")
+    @Mapping(target = "status", constant = "ONBOARDING")
     @Mapping(target = "id", ignore = true)
     // Personal data
     @Mapping(target = "personalData.fullName", source = "fullName")

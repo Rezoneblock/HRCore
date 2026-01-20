@@ -9,8 +9,6 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
-@Getter
-@Setter
 @Builder
 public class EmployeeResponse {
     private UUID id;
