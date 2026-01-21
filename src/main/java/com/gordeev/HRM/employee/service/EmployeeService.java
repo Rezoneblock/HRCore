@@ -28,6 +28,8 @@ public class EmployeeService {
             employee.getEmploymentDetails().setEmployee(employee);
         }
 
+        System.out.println(employee.getStatus());
+
         Employee saved = employeeRepository.save(employee);
         return employeeMapper.toResponse(saved);
     }
