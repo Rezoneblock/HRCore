@@ -1,11 +1,11 @@
 package com.gordeev.HRM.employee.service;
 
+import com.gordeev.HRM.common.exception.ResourceAlreadyExistsException;
 import com.gordeev.HRM.employee.dto.CreateEmployeeRequest;
 import com.gordeev.HRM.employee.dto.EmployeeResponse;
 import com.gordeev.HRM.employee.entity.Employee;
 import com.gordeev.HRM.employee.mapper.EmployeeMapper;
 import com.gordeev.HRM.employee.repository.EmployeeRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +17,10 @@ public class EmployeeService {
 
     public EmployeeResponse createEmployee(CreateEmployeeRequest request) {
         Employee employee = employeeMapper.toEmployee(request);
+
+        if (employeeRepository.existsByPersonalData_PassportSeriesAndPersonalData_PassportNumber(employee.getPersonalData().getPassportSeries(), employee.getPersonalData().getPassportNumber())) {
+            throw new ResourceAlreadyExistsException("Employee with passport SERIAL and NUMBER: '" + employee.getPersonalData().getPassportSeries() + " " + employee.getPersonalData().getPassportNumber() + "' already exists");
+        }
 
         if (employee.getPersonalData() != null) {
             employee.getPersonalData().setEmployee(employee);

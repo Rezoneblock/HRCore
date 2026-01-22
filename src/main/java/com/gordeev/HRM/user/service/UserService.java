@@ -4,7 +4,7 @@ import com.gordeev.HRM.user.dto.request.UserCreateRequest;
 import com.gordeev.HRM.user.dto.request.UserUpdateRequest;
 import com.gordeev.HRM.user.dto.response.UserResponse;
 import com.gordeev.HRM.user.entity.User;
-import com.gordeev.HRM.user.exception.ResourceAlreadyExistsException;
+import com.gordeev.HRM.common.exception.ResourceAlreadyExistsException;
 import com.gordeev.HRM.user.exception.UserNotFoundException;
 import com.gordeev.HRM.user.exception.UsersPageEmptyException;
 import com.gordeev.HRM.user.mapper.UserMapper;
@@ -15,7 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.filter.RequestContextFilter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +26,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    private final RequestContextFilter requestContextFilter;
+    // private final RequestContextFilter requestContextFilter;
 
     private UserResponse userToResponse(User user) {
         UserResponse dto = new UserResponse();

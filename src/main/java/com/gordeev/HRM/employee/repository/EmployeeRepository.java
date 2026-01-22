@@ -11,7 +11,8 @@ import java.util.UUID;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
-    boolean existsByPersonalDataFullNameIgnoreCase(String fullName);
+
+    Boolean existsByPersonalData_PassportSeriesAndPersonalData_PassportNumber(String passportSeries, String passportNumber);
 
     List<Employee> findByEmploymentDetailsDepartment(Departments department);
 

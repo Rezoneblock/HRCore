@@ -1,6 +1,5 @@
-package com.gordeev.HRM.user.exception;
+package com.gordeev.HRM.common.exception;
 
-import com.gordeev.HRM.common.exception.BusinessException;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 

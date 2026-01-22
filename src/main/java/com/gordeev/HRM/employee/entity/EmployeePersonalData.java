@@ -36,10 +36,10 @@ public class EmployeePersonalData {
     @Past
     private LocalDate birthDate;
 
-    @Column(length = 10)
+    @Column(length = 4)
     private String passportSeries;
 
-    @Column(length = 10)
+    @Column(length = 6)
     private String passportNumber;
 
     @Column(length = 100)

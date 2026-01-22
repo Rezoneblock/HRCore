@@ -3,7 +3,6 @@ package com.gordeev.HRM.employee.controller;
 import com.gordeev.HRM.common.dto.ApiResponse;
 import com.gordeev.HRM.employee.dto.CreateEmployeeRequest;
 import com.gordeev.HRM.employee.dto.EmployeeResponse;
-import com.gordeev.HRM.employee.entity.Employee;
 import com.gordeev.HRM.employee.service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
