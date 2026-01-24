@@ -16,11 +16,16 @@ public class CreateEmployeeRequest {
     // Personal Data
     @NotBlank(message = "ФИО обязательно")
     private String fullName;
+    @NotNull(message = "Дата рождения обязательна")
     @Past
     private LocalDate birthDate;
+    @NotBlank(message = "Пол обязателен")
     private String sex;
+    @NotBlank(message = "Серия паспорта обязательна")
     private String passportSeries;
+    @NotBlank(message = "Номер паспорта обязателен")
     private String passportNumber;
+    @NotBlank(message = "Адрес проживания обязателен")
     private String address;
 
     // Contacts
@@ -34,10 +39,14 @@ public class CreateEmployeeRequest {
     @NotNull(message = "Дата приёма на работу обязательна")
     @PastOrPresent
     private LocalDate hireDate;
+    @NotBlank(message = "Должность обязательна")
     private String position;
+    @NotNull(message = "Отдел обязателен")
     private Departments department;
+    @NotNull(message = "Режим работы обязателен")
     private EmploymentTypes employmentType;
-    @DecimalMin("0.00")
+    @NotNull(message = "Зарплата обязательна")
+    @Positive
     private BigDecimal salary;
 
 }

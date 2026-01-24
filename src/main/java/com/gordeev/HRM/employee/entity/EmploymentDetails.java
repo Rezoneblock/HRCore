@@ -41,5 +41,6 @@ public class EmploymentDetails {
     @Enumerated(EnumType.STRING)
     private EmploymentTypes employmentType; // фуллтайм, парттайм или сдельно (contract)
 
+
     private BigDecimal salary;
 }

@@ -30,15 +30,18 @@ public class EmployeePersonalData {
     @Column(length = 40, nullable = false)
     private String fullName;
 
-    @Column(length = 7)
+    @NotBlank
+    @Column(length = 3)
     private String sex;
 
     @Past
     private LocalDate birthDate;
 
+    @NotBlank
     @Column(length = 4)
     private String passportSeries;
 
+    @NotBlank
     @Column(length = 6)
     private String passportNumber;
 
