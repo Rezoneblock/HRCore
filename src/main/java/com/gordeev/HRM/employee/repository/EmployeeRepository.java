@@ -3,6 +3,8 @@ package com.gordeev.HRM.employee.repository;
 import com.gordeev.HRM.common.enums.Departments;
 import com.gordeev.HRM.common.enums.EmployeeStatus;
 import com.gordeev.HRM.employee.entity.Employee;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +22,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
         select e from Employee e
         where lower(e.personalData.fullName) like lower(concat('%', :fullName, '%'))
 """)
-    List<Employee> findByFullName(@Param("fullName") String fullName);
+    Page<Employee> findByFullName(@Param("fullName") String fullName, Pageable pageable);
 
     List<Employee> findByEmploymentDetailsDepartment(Departments department);
 

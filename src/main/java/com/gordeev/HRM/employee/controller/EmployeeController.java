@@ -6,6 +6,10 @@ import com.gordeev.HRM.employee.dto.EmployeeResponse;
 import com.gordeev.HRM.employee.service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +38,15 @@ public class EmployeeController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<ApiResponse<List<EmployeeResponse>>> getEmployeeByFullName(@RequestParam String fullName) {
-        List<EmployeeResponse> employee = employeeService.getEmployeeByFullName(fullName);
-        ApiResponse<List<EmployeeResponse>> response = ApiResponse.success(employee);
+    @GetMapping
+    public ResponseEntity<ApiResponse<Page<EmployeeResponse>>> getEmployeeByFullName(
+            @RequestParam String fullName,
+            @PageableDefault(size = 3, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
+            ) {
+
+        Page<EmployeeResponse> result = employeeService.searchEmployees(fullName, pageable);
+
+        ApiResponse<Page<EmployeeResponse>> response = ApiResponse.success(result);
 
         return ResponseEntity.ok(response);
     }

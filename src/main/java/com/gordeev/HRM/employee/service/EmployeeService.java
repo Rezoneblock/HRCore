@@ -7,16 +7,20 @@ import com.gordeev.HRM.employee.entity.Employee;
 import com.gordeev.HRM.employee.mapper.EmployeeMapper;
 import com.gordeev.HRM.employee.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.config.PageableHandlerMethodArgumentResolverCustomizer;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
+
+    private final PageableHandlerMethodArgumentResolverCustomizer pageableCustomizer;
 
     public EmployeeResponse createEmployee(CreateEmployeeRequest request) {
         Employee employee = employeeMapper.toEmployee(request);
@@ -48,10 +52,17 @@ public class EmployeeService {
                 .toList();
     }
 
-    public List<EmployeeResponse> getEmployeeByFullName(String fullName) {
-        return employeeRepository.findByFullName(fullName)
-                .stream()
-                .map(employeeMapper::toResponse)
-                .toList();
+    public Page<EmployeeResponse> searchEmployees(String fullName, Pageable pageable) {
+
+        Page<Employee> page;
+
+        if (fullName != null && !fullName.trim().isEmpty()) {
+            page = employeeRepository.findByFullName(fullName.trim(), pageable);
+        } else {
+            page = employeeRepository.findAll(pageable);
+        }
+
+        return page.map(employeeMapper::toResponse);
     }
+
 }
