@@ -35,6 +35,7 @@ public class EmployeePersonalData {
     private String sex;
 
     @Past
+    @Column(columnDefinition = "date")
     private LocalDate birthDate;
 
     @NotBlank

@@ -9,6 +9,9 @@ import com.gordeev.HRM.employee.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class EmployeeService {
@@ -36,5 +39,19 @@ public class EmployeeService {
 
         Employee saved = employeeRepository.save(employee);
         return employeeMapper.toResponse(saved);
+    }
+
+    public List<EmployeeResponse> getAllEmployees() {
+        return employeeRepository.findAll()
+                .stream()
+                .map(employeeMapper::toResponse)
+                .toList();
+    }
+
+    public List<EmployeeResponse> getEmployeeByFullName(String fullName) {
+        return employeeRepository.findByFullName(fullName)
+                .stream()
+                .map(employeeMapper::toResponse)
+                .toList();
     }
 }
