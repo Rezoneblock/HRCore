@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,16 +40,24 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<EmployeeResponse>>> getEmployeeByFullName(
+    public ResponseEntity<ApiResponse<PagedModel<EmployeeResponse>>> getEmployeeByFullName(
             @RequestParam String fullName,
             @PageableDefault(size = 3, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
             ) {
 
-        Page<EmployeeResponse> result = employeeService.searchEmployees(fullName, pageable);
+        Page<EmployeeResponse> page = employeeService.searchEmployees(fullName, pageable);
 
-        ApiResponse<Page<EmployeeResponse>> response = ApiResponse.success(result);
+        PagedModel<EmployeeResponse> pagedModel = PagedModel.of(
+                page.getContent(),
+                new PagedModel.PageMetadata(
+                        page.getSize(),
+                        page.getNumber(),
+                        page.getTotalElements(),
+                        page.getTotalPages()
+                )
+        );
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(pagedModel));
     }
 
     // PATCH

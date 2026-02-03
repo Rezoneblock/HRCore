@@ -23,8 +23,4 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
         where lower(e.personalData.fullName) like lower(concat('%', :fullName, '%'))
 """)
     Page<Employee> findByFullName(@Param("fullName") String fullName, Pageable pageable);
-
-    List<Employee> findByEmploymentDetailsDepartment(Departments department);
-
-    List<Employee> findByStatus(EmployeeStatus status);
 }
