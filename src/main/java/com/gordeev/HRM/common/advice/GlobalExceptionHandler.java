@@ -1,7 +1,5 @@
 package com.gordeev.HRM.common.advice;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.gordeev.HRM.common.dto.ApiError;
 import com.gordeev.HRM.common.dto.ApiResponse;
