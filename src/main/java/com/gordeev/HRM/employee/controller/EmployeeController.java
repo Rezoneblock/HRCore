@@ -40,7 +40,7 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<PagedModel<EmployeeResponse>>> getEmployeeByFullName(
+    public ResponseEntity<ApiResponse<PagedModel<EmployeeResponse>>> getEmployee(
             @RequestParam String fullName,
             @PageableDefault(size = 3, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
             ) {
