@@ -2,6 +2,7 @@ package com.gordeev.HRM.employee.dto;
 
 import com.gordeev.HRM.common.enums.Departments;
 import com.gordeev.HRM.common.enums.EmploymentTypes;
+import com.gordeev.HRM.common.enums.WorkFrom;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -45,6 +46,8 @@ public class CreateEmployeeRequest {
     private Departments department;
     @NotNull(message = "Режим работы обязателен")
     private EmploymentTypes employmentType;
+    @NotNull(message = "Формат работы обязателен")
+    private WorkFrom workFrom;
     @NotNull(message = "Зарплата обязательна")
     @Positive
     private BigDecimal salary;

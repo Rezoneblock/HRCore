@@ -25,6 +25,7 @@ public interface EmployeeMapper {
     @Mapping(target = "employmentDetails.position", source = "position")
     @Mapping(target = "employmentDetails.department", source = "department")
     @Mapping(target = "employmentDetails.employmentType", source = "employmentType")
+    @Mapping(target = "employmentDetails.workFrom", source = "workFrom")
     @Mapping(target = "employmentDetails.salary", source = "salary")
     Employee toEmployee(CreateEmployeeRequest request);
 

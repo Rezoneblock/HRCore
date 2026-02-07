@@ -2,6 +2,7 @@ package com.gordeev.HRM.employee.entity;
 
 import com.gordeev.HRM.common.enums.Departments;
 import com.gordeev.HRM.common.enums.EmploymentTypes;
+import com.gordeev.HRM.common.enums.WorkFrom;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,9 +39,14 @@ public class EmploymentDetails {
     @Enumerated(EnumType.STRING)
     private Departments department;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private EmploymentTypes employmentType; // фуллтайм, парттайм или сдельно (contract)
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private WorkFrom workFrom; // Удаленка, офис, гибрид.
 
+    @Column(nullable = false)
     private BigDecimal salary;
 }

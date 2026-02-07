@@ -1,17 +1,19 @@
 package com.gordeev.HRM.common.advice;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.gordeev.HRM.common.dto.ApiError;
 import com.gordeev.HRM.common.dto.ApiResponse;
 import com.gordeev.HRM.common.exception.BusinessException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.NonNull;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +30,6 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ApiResponse<Void>> handleValidationException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
 
@@ -47,7 +48,6 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ApiResponse<Void>> handleConstraintViolationException(ConstraintViolationException ex) {
         Map<String, String> errors = new HashMap<>();
 
@@ -64,4 +64,29 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(response);
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiResponse<Void>> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        Throwable cause = ex.getCause();
+        ApiError error = null;
+        String errorMessage = ex.getMessage();
+
+        if (errorMessage.contains("JSON parse error")) {
+            error = new ApiError("Ошибка формата JSON", "JSON_PARSE_ERROR");
+        }
+
+        if (cause instanceof InvalidFormatException invalidFormatException) {
+            if (invalidFormatException.getTargetType().isEnum()) {
+                String fieldName = !invalidFormatException.getPath().isEmpty() ? invalidFormatException.getPath().getFirst().getFieldName() : "field";
+
+                error = new ApiError(String.format("Недопустимое значение для %s", fieldName), "INVALID_ENUM_VALUE");
+            }
+        }
+
+        if (error == null) {
+            error = new ApiError("Необработанная 'HttpMessageNotReadableException' ошибка...", "BAD_REQUEST");
+        }
+
+        ApiResponse<Void> response = ApiResponse.error(error);
+        return ResponseEntity.badRequest().body(response);
+    }
 }
