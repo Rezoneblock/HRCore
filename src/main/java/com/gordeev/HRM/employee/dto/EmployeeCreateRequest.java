@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateEmployeeRequest {
+public class EmployeeCreateRequest {
     // Personal Data
     @NotBlank(message = "ФИО обязательно")
     private String fullName;

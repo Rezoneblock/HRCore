@@ -1,8 +1,10 @@
 package com.gordeev.HRM.employee.service;
 
 import com.gordeev.HRM.common.exception.ResourceAlreadyExistsException;
-import com.gordeev.HRM.employee.dto.CreateEmployeeRequest;
+import com.gordeev.HRM.common.exception.ResourceDoesNotExistException;
+import com.gordeev.HRM.employee.dto.EmployeeCreateRequest;
 import com.gordeev.HRM.employee.dto.EmployeeResponse;
+import com.gordeev.HRM.employee.dto.EmployeeUpdateRequest;
 import com.gordeev.HRM.employee.entity.Employee;
 import com.gordeev.HRM.employee.mapper.EmployeeMapper;
 import com.gordeev.HRM.employee.repository.EmployeeRepository;
@@ -13,6 +15,7 @@ import org.springframework.data.web.config.PageableHandlerMethodArgumentResolver
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +25,8 @@ public class EmployeeService {
 
     private final PageableHandlerMethodArgumentResolverCustomizer pageableCustomizer;
 
-    public EmployeeResponse createEmployee(CreateEmployeeRequest request) {
-        Employee employee = employeeMapper.toEmployee(request);
+    public EmployeeResponse createEmployee(EmployeeCreateRequest request) {
+        Employee employee = employeeMapper.toEmployeeFromCreate(request);
 
         if (employeeRepository.existsByPersonalData_PassportSeriesAndPersonalData_PassportNumber(employee.getPersonalData().getPassportSeries(), employee.getPersonalData().getPassportNumber())) {
             throw new ResourceAlreadyExistsException("Employee with passport SERIAL and NUMBER: '" + employee.getPersonalData().getPassportSeries() + " " + employee.getPersonalData().getPassportNumber() + "' already exists");
@@ -60,6 +63,16 @@ public class EmployeeService {
         }
 
         return page.map(employeeMapper::toResponse);
+    }
+
+    public EmployeeResponse partialEmployeeUpdate(UUID id, EmployeeUpdateRequest request) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new ResourceDoesNotExistException("Employee with id: " + id + " does not exist"));
+
+        employeeMapper.toEmployeeFromUpdate(request, employee);
+
+        Employee updatedEmployee = employeeRepository.save(employee);
+
+        return employeeMapper.toResponse(updatedEmployee);
     }
 
 }

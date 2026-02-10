@@ -1,13 +1,35 @@
 package com.gordeev.HRM.employee.mapper;
 
-import com.gordeev.HRM.employee.dto.CreateEmployeeRequest;
+import com.gordeev.HRM.employee.dto.EmployeeCreateRequest;
 import com.gordeev.HRM.employee.dto.EmployeeResponse;
+import com.gordeev.HRM.employee.dto.EmployeeUpdateRequest;
 import com.gordeev.HRM.employee.entity.Employee;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface EmployeeMapper {
+    @Mapping(target = "status", source = "status")
+    // Personal data
+    @Mapping(target = "personalData.fullName", source = "fullName")
+    @Mapping(target = "personalData.birthDate", source = "birthDate")
+    @Mapping(target = "personalData.sex", source = "sex")
+    @Mapping(target = "personalData.passportSeries", source = "passportSeries")
+    @Mapping(target = "personalData.passportNumber", source = "passportNumber")
+    @Mapping(target = "personalData.address", source = "address")
+    // Contacts
+    @Mapping(target = "contacts.phone", source = "phone")
+    @Mapping(target = "contacts.email", source = "email")
+    // Details
+    @Mapping(target = "employmentDetails.position", source = "position")
+    @Mapping(target = "employmentDetails.department", source = "department")
+    @Mapping(target = "employmentDetails.employmentType", source = "employmentType")
+    @Mapping(target = "employmentDetails.workFrom", source = "workFrom")
+    @Mapping(target = "employmentDetails.salary", source = "salary")
+    Employee toEmployeeFromUpdate(EmployeeUpdateRequest request, @MappingTarget Employee employee);
+
     @Mapping(target = "status", constant = "ONBOARDING")
     @Mapping(target = "id", ignore = true)
     // Personal data
@@ -27,7 +49,7 @@ public interface EmployeeMapper {
     @Mapping(target = "employmentDetails.employmentType", source = "employmentType")
     @Mapping(target = "employmentDetails.workFrom", source = "workFrom")
     @Mapping(target = "employmentDetails.salary", source = "salary")
-    Employee toEmployee(CreateEmployeeRequest request);
+    Employee toEmployeeFromCreate(EmployeeCreateRequest request);
 
     @Mapping(target = "fullName", source = "personalData.fullName")
     @Mapping(target = "birthDate", source = "personalData.birthDate")

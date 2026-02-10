@@ -1,8 +1,9 @@
 package com.gordeev.HRM.employee.controller;
 
 import com.gordeev.HRM.common.dto.ApiResponse;
-import com.gordeev.HRM.employee.dto.CreateEmployeeRequest;
+import com.gordeev.HRM.employee.dto.EmployeeCreateRequest;
 import com.gordeev.HRM.employee.dto.EmployeeResponse;
+import com.gordeev.HRM.employee.dto.EmployeeUpdateRequest;
 import com.gordeev.HRM.employee.service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -24,7 +26,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<EmployeeResponse>> createEmployee(@RequestBody @Valid CreateEmployeeRequest request) {
+    public ResponseEntity<ApiResponse<EmployeeResponse>> createEmployee(@RequestBody @Valid EmployeeCreateRequest request) {
         EmployeeResponse employee = employeeService.createEmployee(request);
         ApiResponse<EmployeeResponse> response = ApiResponse.success(employee);
 
@@ -60,6 +62,15 @@ public class EmployeeController {
         return ResponseEntity.ok(ApiResponse.success(pagedModel));
     }
 
-    // PATCH
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiResponse<EmployeeResponse>> patchEmployee(
+            @PathVariable UUID id,
+            @RequestBody EmployeeUpdateRequest request
+            ) {
+        EmployeeResponse updatedEmployee =  employeeService.partialEmployeeUpdate(id, request);
+
+        return ResponseEntity.ok(ApiResponse.success(updatedEmployee));
+    }
+
     // DELETE
 }

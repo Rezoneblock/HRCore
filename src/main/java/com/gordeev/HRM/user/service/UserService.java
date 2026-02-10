@@ -109,7 +109,7 @@ public class UserService {
             }
         }
 
-        // Если есть замена почты
+        // Если есть замена имени
         if (request.username() != null) {
             // Проверка на совпадение со старой почтой (нельзя)
             if (request.username().equals(user.getUsername())) {
