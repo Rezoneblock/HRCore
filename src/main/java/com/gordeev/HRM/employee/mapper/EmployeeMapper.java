@@ -28,7 +28,7 @@ public interface EmployeeMapper {
     @Mapping(target = "employmentDetails.employmentType", source = "employmentType")
     @Mapping(target = "employmentDetails.workFrom", source = "workFrom")
     @Mapping(target = "employmentDetails.salary", source = "salary")
-    Employee toEmployeeFromUpdate(EmployeeUpdateRequest request, @MappingTarget Employee employee);
+    void toEmployeeFromUpdate(EmployeeUpdateRequest request, @MappingTarget Employee employee);
 
     @Mapping(target = "status", constant = "ONBOARDING")
     @Mapping(target = "id", ignore = true)

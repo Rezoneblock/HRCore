@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -55,7 +56,13 @@ public class GlobalExceptionHandler {
             errors.put(fieldName, errorMessage);
         });
 
-        String message = "Ошибка валидации entity: " + String.join(", ", errors.values());
+        String detailedMessage = errors.entrySet().stream()
+                .map(e -> "поле " + e.getKey() + " " + e.getValue())
+                .collect(Collectors.joining(", "));
+
+        String message = "Ошибка валидации: " + detailedMessage;
+
+
         ApiError error = new ApiError(message, "ENTITY_VALIDATION_ERROR");
         ApiResponse<Void> response = ApiResponse.error(error);
 
