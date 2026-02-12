@@ -72,7 +72,6 @@ public class EmployeeController {
         return ResponseEntity.ok(ApiResponse.success(updatedEmployee));
     }
 
-    // Delete User via email
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         employeeService.deleteEmployee(id);
