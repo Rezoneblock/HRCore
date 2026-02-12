@@ -1,9 +1,12 @@
 package com.gordeev.HRM.employee.entity;
 
 import com.gordeev.HRM.common.enums.EmployeeStatus;
+import com.gordeev.HRM.onboarding.entity.OnboardingTask;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -17,9 +20,8 @@ public class Employee {
     @GeneratedValue
     private UUID id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private EmployeeStatus status;
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OnboardingTask> onboardingTasks = new ArrayList<>();
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private EmployeePersonalData personalData;
@@ -49,6 +51,13 @@ public class Employee {
         this.employmentDetails = details;
         if (details != null) {
             employmentDetails.setEmployee(this);
+        }
+    }
+
+    public void addOnboardingTask(OnboardingTask task) {
+        this.onboardingTasks.add(task);
+        if (task != null) {
+            task.setEmployee(this);
         }
     }
 }

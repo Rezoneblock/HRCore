@@ -1,6 +1,7 @@
 package com.gordeev.HRM.employee.entity;
 
 import com.gordeev.HRM.common.enums.Departments;
+import com.gordeev.HRM.common.enums.EmployeeStatus;
 import com.gordeev.HRM.common.enums.EmploymentTypes;
 import com.gordeev.HRM.common.enums.WorkFrom;
 import jakarta.persistence.*;
@@ -49,4 +50,8 @@ public class EmploymentDetails {
 
     @Column(nullable = false)
     private BigDecimal salary;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EmployeeStatus status;
 }

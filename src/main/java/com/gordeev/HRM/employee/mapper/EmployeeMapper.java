@@ -11,7 +11,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface EmployeeMapper {
-    @Mapping(target = "status", source = "status")
+    @Mapping(target = "employmentDetails.status", source = "status")
     // Personal data
     @Mapping(target = "personalData.fullName", source = "fullName")
     @Mapping(target = "personalData.birthDate", source = "birthDate")
@@ -30,7 +30,7 @@ public interface EmployeeMapper {
     @Mapping(target = "employmentDetails.salary", source = "salary")
     void toEmployeeFromUpdate(EmployeeUpdateRequest request, @MappingTarget Employee employee);
 
-    @Mapping(target = "status", constant = "ONBOARDING")
+    @Mapping(target = "employmentDetails.status", constant = "ONBOARDING")
     @Mapping(target = "id", ignore = true)
     // Personal data
     @Mapping(target = "personalData.fullName", source = "fullName")
