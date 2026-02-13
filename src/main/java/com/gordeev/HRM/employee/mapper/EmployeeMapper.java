@@ -11,7 +11,6 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface EmployeeMapper {
-    @Mapping(target = "employmentDetails.status", source = "status")
     // Personal data
     @Mapping(target = "personalData.fullName", source = "fullName")
     @Mapping(target = "personalData.birthDate", source = "birthDate")
@@ -28,9 +27,9 @@ public interface EmployeeMapper {
     @Mapping(target = "employmentDetails.employmentType", source = "employmentType")
     @Mapping(target = "employmentDetails.workFrom", source = "workFrom")
     @Mapping(target = "employmentDetails.salary", source = "salary")
+    @Mapping(target = "employmentDetails.status", source = "status")
     void toEmployeeFromUpdate(EmployeeUpdateRequest request, @MappingTarget Employee employee);
 
-    @Mapping(target = "employmentDetails.status", constant = "ONBOARDING")
     @Mapping(target = "id", ignore = true)
     // Personal data
     @Mapping(target = "personalData.fullName", source = "fullName")
@@ -49,6 +48,7 @@ public interface EmployeeMapper {
     @Mapping(target = "employmentDetails.employmentType", source = "employmentType")
     @Mapping(target = "employmentDetails.workFrom", source = "workFrom")
     @Mapping(target = "employmentDetails.salary", source = "salary")
+    @Mapping(target = "employmentDetails.status", constant = "ONBOARDING")
     Employee toEmployeeFromCreate(EmployeeCreateRequest request);
 
     @Mapping(target = "fullName", source = "personalData.fullName")
@@ -62,5 +62,6 @@ public interface EmployeeMapper {
     @Mapping(target = "position", source = "employmentDetails.position")
     @Mapping(target = "department", source = "employmentDetails.department")
     @Mapping(target = "salary", source = "employmentDetails.salary")
+    @Mapping(target = "status", source = "employmentDetails.status")
     EmployeeResponse toResponse(Employee employee);
 }

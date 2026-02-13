@@ -1,6 +1,7 @@
 package com.gordeev.HRM.onboarding.entity;
 
 import com.gordeev.HRM.common.enums.Departments;
+import com.gordeev.HRM.common.enums.OnboardingDepartments;
 import com.gordeev.HRM.common.enums.OnboardingStatus;
 import com.gordeev.HRM.employee.entity.Employee;
 import jakarta.persistence.*;
@@ -25,7 +26,7 @@ public class OnboardingTask {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Departments department;
+    private OnboardingDepartments department;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
