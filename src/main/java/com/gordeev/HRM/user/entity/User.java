@@ -1,5 +1,7 @@
 package com.gordeev.HRM.user.entity;
 
+import com.gordeev.HRM.common.enums.RoleType;
+import com.gordeev.HRM.employee.entity.Employee;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -7,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -31,9 +34,13 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    private String firstname;
-    private String lastname;
+    private String fullName;
 
+    private Set<RoleType> roles;
+
+    @OneToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)

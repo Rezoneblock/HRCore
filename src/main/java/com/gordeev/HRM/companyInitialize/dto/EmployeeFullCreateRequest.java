@@ -1,4 +1,4 @@
-package com.gordeev.HRM.user.dto.request;
+package com.gordeev.HRM.companyInitialize.dto;
 
 import com.gordeev.HRM.common.enums.RoleType;
 import jakarta.validation.constraints.Email;
@@ -7,8 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
 
-
-public record UserCreateRequest (
+public record EmployeeFullCreateRequest(
         @NotBlank(message = "username обязателен")
         String username,
 
@@ -24,4 +23,5 @@ public record UserCreateRequest (
 
         @NotNull(message = "Роль обязательна")
         Set<RoleType> role
-) {}
+) {
+}

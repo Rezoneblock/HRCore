@@ -1,9 +1,9 @@
 package com.gordeev.HRM.onboarding.entity;
 
-import com.gordeev.HRM.common.enums.Departments;
 import com.gordeev.HRM.common.enums.OnboardingDepartments;
 import com.gordeev.HRM.common.enums.OnboardingStatus;
 import com.gordeev.HRM.employee.entity.Employee;
+import com.gordeev.HRM.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +28,10 @@ public class OnboardingTask {
     @Column(nullable = false)
     private OnboardingDepartments department;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assignee_id")
+    private User assignee;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OnboardingStatus status = OnboardingStatus.PENDGING;
@@ -36,12 +40,9 @@ public class OnboardingTask {
     private String taskData;
 
     @Column(length = 500)
-    private String comments;
+    private String comment;
 
     private LocalDateTime assignedAt = LocalDateTime.now();
 
     private LocalDateTime completedAt;
-
-    @Column(length = 100)
-    private String assignedTo;
 }

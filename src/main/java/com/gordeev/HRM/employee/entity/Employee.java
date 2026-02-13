@@ -2,9 +2,13 @@ package com.gordeev.HRM.employee.entity;
 
 import com.gordeev.HRM.common.enums.EmployeeStatus;
 import com.gordeev.HRM.onboarding.entity.OnboardingTask;
+import com.gordeev.HRM.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -32,11 +36,21 @@ public class Employee {
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private EmploymentDetails employmentDetails;
 
+    @OneToOne(mappedBy = "employee")
+    private User user;
+
+
+    public void setUser(User user) {
+        this.user = user;
+        if (user != null) {
+            user.setEmployee(this);
+        }
+    }
 
     public void setPersonalData(EmployeePersonalData data) {
         this.personalData = data;
         if (data != null) {
-            personalData.setEmployee(this);
+            data.setEmployee(this);
         }
     }
 
@@ -50,7 +64,7 @@ public class Employee {
     public void setEmploymentDetails (EmploymentDetails details) {
         this.employmentDetails = details;
         if (details != null) {
-            employmentDetails.setEmployee(this);
+            details.setEmployee(this);
         }
     }
 
@@ -60,4 +74,12 @@ public class Employee {
             task.setEmployee(this);
         }
     }
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 }

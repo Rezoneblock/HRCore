@@ -8,7 +8,7 @@ public enum Departments {
     FINANCE("Бухгалтерия"),
     HR("Кадры"),
     MEDICAL("Здоровье"),
-    SUPPLY("Канцелярия"),
+    SUPPLY("Мат. обеспечение"),
     MARKETING("Маркетинг"),
     SALES("Продажи"),
     MANAMEGENT("Руководство");

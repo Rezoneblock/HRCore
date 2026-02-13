@@ -50,6 +50,7 @@ public class EmployeeService {
         for (OnboardingDepartments depts : OnboardingDepartments.values()) {
             OnboardingTask task = new OnboardingTask();
             task.setEmployee(saved);
+//            task.setAssignee()
             task.setDepartment(depts);
             task.setStatus(OnboardingStatus.PENDGING);
             saved.addOnboardingTask(task);
