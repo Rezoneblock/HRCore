@@ -1,0 +1,22 @@
+package com.gordeev.HRM.dictionary.dto.response;
+
+import com.gordeev.HRM.user.entity.User;
+import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
+public class DepartmentResponse {
+    private Long id;
+
+    private String code; // IT, FINANCE, HR, ...
+
+    private String name; // Администрирование информационных систем, отдел кадров, ...
+
+    private String description;
+
+    private boolean active;
+
+    private User head;
+}
