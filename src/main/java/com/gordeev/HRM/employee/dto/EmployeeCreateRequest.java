@@ -1,8 +1,5 @@
 package com.gordeev.HRM.employee.dto;
 
-import com.gordeev.HRM.common.enums.Departments;
-import com.gordeev.HRM.common.enums.EmploymentTypes;
-import com.gordeev.HRM.common.enums.WorkFrom;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -43,11 +40,11 @@ public class EmployeeCreateRequest {
     @NotBlank(message = "Должность обязательна")
     private String position;
     @NotNull(message = "Отдел обязателен")
-    private Departments department;
+    private String department;
     @NotNull(message = "Режим работы обязателен")
-    private EmploymentTypes employmentType;
+    private String employmentType;
     @NotNull(message = "Формат работы обязателен")
-    private WorkFrom workFrom;
+    private String  workFrom;
     @NotNull(message = "Зарплата обязательна")
     @Positive
     private BigDecimal salary;

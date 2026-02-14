@@ -1,9 +1,6 @@
 package com.gordeev.HRM.employee.entity;
 
-import com.gordeev.HRM.common.enums.Departments;
 import com.gordeev.HRM.common.enums.EmployeeStatus;
-import com.gordeev.HRM.common.enums.EmploymentTypes;
-import com.gordeev.HRM.common.enums.WorkFrom;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +10,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Table(name = "employment_details")
+@Table(name = "employee_employment_details")
 @Getter
 @Setter
 public class EmploymentDetails {
@@ -37,16 +34,13 @@ public class EmploymentDetails {
     private String position;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Departments department;
+    private String department;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private EmploymentTypes employmentType; // фуллтайм, парттайм или сдельно (contract)
+    private String employmentType; // фуллтайм, парттайм или сдельно (contract)
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private WorkFrom workFrom; // Удаленка, офис, гибрид.
+    private String workFrom; // Удаленка, офис, гибрид.
 
     @Column(nullable = false)
     private BigDecimal salary;

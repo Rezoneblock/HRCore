@@ -17,10 +17,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompanyInitializeController {
 
-    @PostMapping
-    public ResponseEntity<List<ApiResponse<UserResponse>>> createUser(@RequestBody List<EmployeeCreateRequest> employees) {
-
-    }
+//    @PostMapping
+//    public ResponseEntity<List<ApiResponse<UserResponse>>> createUser(@RequestBody List<EmployeeCreateRequest> employees) {
+//
+//    }
 
     //is-system=true ADMIN / SUPER_ADMIN / HR_MANAGER / EMPLOYEE / MANAGER
 }

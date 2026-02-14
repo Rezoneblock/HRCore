@@ -1,6 +1,5 @@
 package com.gordeev.HRM.employee.dto;
 
-import com.gordeev.HRM.common.enums.Departments;
 import com.gordeev.HRM.common.enums.EmployeeStatus;
 import lombok.*;
 
@@ -25,7 +24,7 @@ public class EmployeeResponse {
 
     // Details
     private String position;
-    private Departments department;
+    private String department;
     private BigDecimal salary;
     private LocalDate hireDate;
 }

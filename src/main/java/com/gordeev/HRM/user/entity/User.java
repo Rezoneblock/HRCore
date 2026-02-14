@@ -1,6 +1,5 @@
 package com.gordeev.HRM.user.entity;
 
-import com.gordeev.HRM.common.enums.RoleType;
 import com.gordeev.HRM.employee.entity.Employee;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,7 +35,7 @@ public class User {
 
     private String fullName;
 
-    private Set<RoleType> roles;
+    private Set<String> roles;
 
     @OneToOne
     @JoinColumn(name = "employee_id")

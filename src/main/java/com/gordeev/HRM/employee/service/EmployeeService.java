@@ -1,6 +1,5 @@
 package com.gordeev.HRM.employee.service;
 
-import com.gordeev.HRM.common.enums.OnboardingDepartments;
 import com.gordeev.HRM.common.enums.OnboardingStatus;
 import com.gordeev.HRM.common.exception.ResourceAlreadyExistsException;
 import com.gordeev.HRM.common.exception.ResourceDoesNotExistException;
@@ -10,7 +9,6 @@ import com.gordeev.HRM.employee.dto.EmployeeUpdateRequest;
 import com.gordeev.HRM.employee.entity.Employee;
 import com.gordeev.HRM.employee.mapper.EmployeeMapper;
 import com.gordeev.HRM.employee.repository.EmployeeRepository;
-import com.gordeev.HRM.onboarding.entity.OnboardingTask;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,14 +45,14 @@ public class EmployeeService {
 
         Employee saved = employeeRepository.save(employee);
 
-        for (OnboardingDepartments depts : OnboardingDepartments.values()) {
-            OnboardingTask task = new OnboardingTask();
-            task.setEmployee(saved);
-//            task.setAssignee()
-            task.setDepartment(depts);
-            task.setStatus(OnboardingStatus.PENDGING);
-            saved.addOnboardingTask(task);
-        }
+//        for (OnboardingDepartments depts : OnboardingDepartments.values()) {
+//            OnboardingTask task = new OnboardingTask();
+//            task.setEmployee(saved);
+////            task.setAssignee()
+//            task.setDepartment(depts);
+//            task.setStatus(OnboardingStatus.PENDGING);
+//            saved.addOnboardingTask(task);
+//        }
 
         return employeeMapper.toResponse(saved);
     }

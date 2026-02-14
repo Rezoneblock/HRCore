@@ -1,6 +1,5 @@
 package com.gordeev.HRM.onboarding.entity;
 
-import com.gordeev.HRM.common.enums.OnboardingDepartments;
 import com.gordeev.HRM.common.enums.OnboardingStatus;
 import com.gordeev.HRM.employee.entity.Employee;
 import com.gordeev.HRM.user.entity.User;
@@ -24,9 +23,8 @@ public class OnboardingTask {
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private OnboardingDepartments department;
+    private String department;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assignee_id")

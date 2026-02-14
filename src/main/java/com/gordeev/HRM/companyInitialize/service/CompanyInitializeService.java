@@ -14,11 +14,11 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CompanyInitializeService {
-    public List<EmployeeResponse> createEmployees(List<EmployeeCreateRequest> employees) {
-        if (employees == null || employees.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        List<>
-    }
+//    public List<EmployeeResponse> createEmployees(List<EmployeeCreateRequest> employees) {
+//        if (employees == null || employees.isEmpty()) {
+//            return Collections.emptyList();
+//        }
+//
+//
+//    }
 }
