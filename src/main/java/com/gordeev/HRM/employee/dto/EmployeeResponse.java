@@ -27,4 +27,5 @@ public class EmployeeResponse {
     private String department;
     private BigDecimal salary;
     private LocalDate hireDate;
+    private Long serviceNumber;
 }

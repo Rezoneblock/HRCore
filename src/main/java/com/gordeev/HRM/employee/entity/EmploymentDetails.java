@@ -48,4 +48,8 @@ public class EmploymentDetails {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EmployeeStatus status;
+
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(nullable = false, unique = true)
+    private Long serviceNumber;
 }

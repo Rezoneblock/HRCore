@@ -63,5 +63,6 @@ public interface EmployeeMapper {
     @Mapping(target = "department", source = "employmentDetails.department")
     @Mapping(target = "salary", source = "employmentDetails.salary")
     @Mapping(target = "status", source = "employmentDetails.status")
+    @Mapping(target = "serviceNumber", source = "employmentDetails.serviceNumber")
     EmployeeResponse toResponse(Employee employee);
 }

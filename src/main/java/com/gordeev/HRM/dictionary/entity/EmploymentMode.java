@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "dict_work_modes")
+@Table(name = "dict_employment_modes")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkMode {
+public class EmploymentMode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
