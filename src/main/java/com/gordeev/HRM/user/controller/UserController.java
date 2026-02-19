@@ -34,10 +34,10 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    // GET User via email
-    @GetMapping("/{username}")
-    public ResponseEntity<ApiResponse<UserResponse>> getUserByEmail(@PathVariable String username) {
-        UserResponse user = userService.findByUsername(username);
+    // GET User via login
+    @GetMapping("/{login}")
+    public ResponseEntity<ApiResponse<UserResponse>> getUserByEmail(@PathVariable String login) {
+        UserResponse user = userService.findByLogin(login);
         ApiResponse<UserResponse> response = ApiResponse.success(user);
 
         return ResponseEntity.ok(response);
@@ -61,14 +61,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // Delete User via email
-    @DeleteMapping("/by-email")
-    public ResponseEntity<Void> deleteUser(@RequestParam String email) {
-        userService.deleteByEmail(email);
-
-        return ResponseEntity.noContent().build();
-    }
-
+    // Patch User
     @PatchMapping("/{id}")
     public ResponseEntity<ApiResponse<UserResponse>> updateUser(@PathVariable Long id, @RequestBody @Valid UserUpdateRequest request) {
         UserResponse user = userService.partialUpdateUser(id, request);

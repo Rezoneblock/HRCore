@@ -1,5 +1,6 @@
 package com.gordeev.HRM.user.mapper;
 
+import com.gordeev.HRM.user.dto.request.UserCreateRequest;
 import com.gordeev.HRM.user.dto.request.UserUpdateRequest;
 import com.gordeev.HRM.user.dto.response.UserResponse;
 import com.gordeev.HRM.user.entity.User;
@@ -11,5 +12,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface UserMapper {
     void updateUserFromRequest(UserUpdateRequest dto, @MappingTarget User user);
 
-    UserResponse toDto(User user);
+    User toUser(UserCreateRequest request);
+
+    UserResponse toResponse(User user);
 }

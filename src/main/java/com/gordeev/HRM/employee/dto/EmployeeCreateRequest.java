@@ -48,5 +48,4 @@ public class EmployeeCreateRequest {
     @NotNull(message = "Зарплата обязательна")
     @Positive
     private BigDecimal salary;
-
 }

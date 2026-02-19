@@ -26,21 +26,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    private UserResponse userToResponse(User user) {
-        UserResponse dto = new UserResponse();
-        dto.setId(user.getId());
-        dto.setUsername(user.getUsername());
-        dto.setEmail(user.getEmail());
-        dto.setFirstname(user.getFullName());
-        dto.setCreatedAt(user.getCreatedAt());
-        dto.setUpdatedAt(user.getUpdatedAt());
-        return dto;
-    }
-
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(this::userToResponse)
+                .map(userMapper::toResponse)
                 .collect(Collectors.toList());
     }
 
@@ -55,64 +44,35 @@ public class UserService {
             throw new UsersPageEmptyException("page=" + pageable.getPageNumber() + " and size=" + pageable.getPageSize() + " does not exists");
         }
 
-        return page.map(this::userToResponse);
+        return page.map(userMapper::toResponse);
     }
 
-    public UserResponse findByUsername(String username) {
+    public UserResponse findByLogin(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User with username: " + username + " does not exists"));
-        return userToResponse(user);
+        return userMapper.toResponse(user);
     }
 
     @Transactional
     public UserResponse createUser(UserCreateRequest request) {
-
-        if (userRepository.existsByEmail(request.email())) {
-            throw new ResourceAlreadyExistsException("User with email: '" + request.email() + "' already exists");
-        }
-
-        User user = User.builder()
-                .username(request.username())
-                .email(request.email())
-                .password(request.password())
-                .fullName(request.fullName())
-                .build();
+        User user = userMapper.toUser(request);
 
         User savedUser = userRepository.save(user);
 
-        return userToResponse(savedUser);
-    }
-
-    @Transactional
-    public void deleteByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User with email: " + email + " does not exists"));
-
-        userRepository.delete(user);
+        return userMapper.toResponse(savedUser);
     }
 
     @Transactional
     public UserResponse partialUpdateUser(Long id, UserUpdateRequest request) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id: " + id + " does not exists"));
 
-        // Если есть замена почты
-        if (request.email() != null) {
-            // Проверка на совпадение со старой почтой (нельзя)
-            if (request.email().equals(user.getEmail())) {
-                throw new ResourceAlreadyExistsException("New email can't be same as old one");
-            } else { // Проверка на уникальность новой почты
-                if (userRepository.existsByEmail(request.email())) {
-                    throw new ResourceAlreadyExistsException("User with email: '" + request.email() + "' already exists");
-                }
-            }
-        }
-
         // Если есть замена имени
-        if (request.username() != null) {
+        if (request.login() != null) {
             // Проверка на совпадение со старой почтой (нельзя)
-            if (request.username().equals(user.getUsername())) {
-                throw new ResourceAlreadyExistsException("New username can't be same as old one");
+            if (request.login().equals(user.getLogin())) {
+                throw new ResourceAlreadyExistsException("New login can't be same as old one");
             } else { // Проверка на уникальность новой почты
-                if (userRepository.existsByUsername(request.username())) {
-                    throw new ResourceAlreadyExistsException("User with username: '" + request.username() + "' already exists");
+                if (userRepository.existsByUsername(request.login())) {
+                    throw new ResourceAlreadyExistsException("User with login: '" + request.login() + "' already exists");
                 }
             }
         }
@@ -121,6 +81,6 @@ public class UserService {
 
         User updatedUser = userRepository.save(user);
 
-        return userMapper.toDto(updatedUser);
+        return userMapper.toResponse(updatedUser);
     }
 }

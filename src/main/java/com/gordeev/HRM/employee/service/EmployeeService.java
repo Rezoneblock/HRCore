@@ -9,12 +9,15 @@ import com.gordeev.HRM.employee.dto.EmployeeUpdateRequest;
 import com.gordeev.HRM.employee.entity.Employee;
 import com.gordeev.HRM.employee.mapper.EmployeeMapper;
 import com.gordeev.HRM.employee.repository.EmployeeRepository;
+import com.gordeev.HRM.user.dto.request.UserCreateRequest;
+import com.gordeev.HRM.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,6 +27,7 @@ import java.util.UUID;
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
+    private final UserService userService;
 
     @Transactional
     public EmployeeResponse createEmployee(EmployeeCreateRequest request) {
@@ -45,14 +49,12 @@ public class EmployeeService {
 
         Employee saved = employeeRepository.save(employee);
 
-//        for (OnboardingDepartments depts : OnboardingDepartments.values()) {
-//            OnboardingTask task = new OnboardingTask();
-//            task.setEmployee(saved);
-////            task.setAssignee()
-//            task.setDepartment(depts);
-//            task.setStatus(OnboardingStatus.PENDGING);
-//            saved.addOnboardingTask(task);
-//        }
+        UserCreateRequest userCreateRequest = UserCreateRequest.builder()
+                .login(saved.getContacts().getEmail())
+                .fullName(saved.getPersonalData().getFullName())
+                .build();
+
+        userService.createUser(userCreateRequest);
 
         return employeeMapper.toResponse(saved);
     }

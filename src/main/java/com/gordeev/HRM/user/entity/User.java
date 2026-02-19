@@ -25,10 +25,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String username;
-
-    @Column(nullable = false, unique = true)
-    private String email;
+    private String login;
 
     @Column(nullable = false)
     private String password;
@@ -36,6 +33,9 @@ public class User {
     private String fullName;
 
     private Set<String> roles;
+
+    @Column(nullable = false)
+    private Boolean active = false;
 
     @OneToOne
     @JoinColumn(name = "employee_id")

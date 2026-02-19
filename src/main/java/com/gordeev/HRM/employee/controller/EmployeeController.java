@@ -33,6 +33,9 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+//    @PostMapping("/initiate")
+//    public ResponseEntity<ApiResponse<EmployeeResponse>> initiateCompany(@RequestBody @Valid )
+
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<EmployeeResponse>>> getAllEmployees() {
         List<EmployeeResponse> employees = employeeService.getAllEmployees();
