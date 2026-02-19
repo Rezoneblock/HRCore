@@ -1,12 +1,11 @@
 package com.gordeev.HRM.user.service;
 
+import com.gordeev.HRM.common.exception.ResourceDoesNotExistException;
 import com.gordeev.HRM.user.dto.request.UserCreateRequest;
 import com.gordeev.HRM.user.dto.request.UserUpdateRequest;
 import com.gordeev.HRM.user.dto.response.UserResponse;
 import com.gordeev.HRM.user.entity.User;
 import com.gordeev.HRM.common.exception.ResourceAlreadyExistsException;
-import com.gordeev.HRM.user.exception.UserNotFoundException;
-import com.gordeev.HRM.user.exception.UsersPageEmptyException;
 import com.gordeev.HRM.user.mapper.UserMapper;
 import com.gordeev.HRM.user.repository.UserRepository;
 import lombok.NonNull;
@@ -40,15 +39,11 @@ public class UserService {
 
         Page<@NonNull User> page = userRepository.findAll(pageable);
 
-        if (page.isEmpty()) {
-            throw new UsersPageEmptyException("page=" + pageable.getPageNumber() + " and size=" + pageable.getPageSize() + " does not exists");
-        }
-
         return page.map(userMapper::toResponse);
     }
 
-    public UserResponse findByLogin(String username) {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User with username: " + username + " does not exists"));
+    public UserResponse findByLogin(String login) {
+        User user = userRepository.findByLogin(login).orElseThrow(() -> new ResourceDoesNotExistException("User with login: " + login + " does not exists"));
         return userMapper.toResponse(user);
     }
 
@@ -63,15 +58,13 @@ public class UserService {
 
     @Transactional
     public UserResponse partialUpdateUser(Long id, UserUpdateRequest request) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id: " + id + " does not exists"));
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceDoesNotExistException("User with id: " + id + " does not exists"));
 
-        // Если есть замена имени
         if (request.login() != null) {
-            // Проверка на совпадение со старой почтой (нельзя)
             if (request.login().equals(user.getLogin())) {
                 throw new ResourceAlreadyExistsException("New login can't be same as old one");
-            } else { // Проверка на уникальность новой почты
-                if (userRepository.existsByUsername(request.login())) {
+            } else {
+                if (userRepository.existsByLogin(request.login())) {
                     throw new ResourceAlreadyExistsException("User with login: '" + request.login() + "' already exists");
                 }
             }
