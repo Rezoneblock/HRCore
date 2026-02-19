@@ -16,7 +16,7 @@ import java.util.UUID;
 public class EmploymentDetails {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @OneToOne
@@ -49,7 +49,6 @@ public class EmploymentDetails {
     @Column(nullable = false)
     private EmployeeStatus status;
 
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(nullable = false, unique = true)
     private Long serviceNumber;
 }

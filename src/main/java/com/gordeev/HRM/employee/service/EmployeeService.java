@@ -1,6 +1,5 @@
 package com.gordeev.HRM.employee.service;
 
-import com.gordeev.HRM.common.enums.OnboardingStatus;
 import com.gordeev.HRM.common.exception.ResourceAlreadyExistsException;
 import com.gordeev.HRM.common.exception.ResourceDoesNotExistException;
 import com.gordeev.HRM.employee.dto.EmployeeCreateRequest;
@@ -17,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.SecureRandom;
 import java.util.List;
 import java.util.UUID;
 

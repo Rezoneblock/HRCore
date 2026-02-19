@@ -1,7 +1,6 @@
-package com.gordeev.HRM.dictionary.dto.response;
+package com.gordeev.HRM.dictionary.dto.response.department;
 
 import com.gordeev.HRM.user.entity.User;
-import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 
