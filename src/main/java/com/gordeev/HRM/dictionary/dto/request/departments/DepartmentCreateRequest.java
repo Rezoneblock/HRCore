@@ -1,4 +1,4 @@
-package com.gordeev.HRM.dictionary.dto.request;
+package com.gordeev.HRM.dictionary.dto.request.departments;
 
 public record DepartmentCreateRequest(
 

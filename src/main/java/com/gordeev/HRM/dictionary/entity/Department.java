@@ -29,7 +29,11 @@ public class Department {
     @Column(length = 500)
     private String description;
 
+    @Column(nullable = false)
     private boolean active = true;
+
+    @Column(nullable = false)
+    private boolean isOnboarding = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "head_user_id")
