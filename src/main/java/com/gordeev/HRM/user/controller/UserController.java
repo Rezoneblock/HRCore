@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -63,7 +64,7 @@ public class UserController {
 
     // Patch User
     @PatchMapping("/{id}")
-    public ResponseEntity<ApiResponse<UserResponse>> updateUser(@PathVariable Long id, @RequestBody @Valid UserUpdateRequest request) {
+    public ResponseEntity<ApiResponse<UserResponse>> updateUser(@PathVariable UUID id, @RequestBody @Valid UserUpdateRequest request) {
         UserResponse user = userService.partialUpdateUser(id, request);
 
         ApiResponse<UserResponse> response = ApiResponse.success(user);

@@ -1,7 +1,9 @@
 package com.gordeev.HRM.dictionary.service;
 
 import com.gordeev.HRM.common.exception.ResourceAlreadyExistsException;
+import com.gordeev.HRM.common.exception.ResourceDoesNotExistException;
 import com.gordeev.HRM.dictionary.dto.request.departments.DepartmentCreateRequest;
+import com.gordeev.HRM.dictionary.dto.request.departments.DepartmentPatchRequest;
 import com.gordeev.HRM.dictionary.dto.request.departments.SetOnboardingDepartmentsRequest;
 import com.gordeev.HRM.dictionary.dto.response.department.DepartmentResponse;
 import com.gordeev.HRM.dictionary.entity.Department;
@@ -71,5 +73,15 @@ public class DepartmentService {
         selectedDepartments.forEach(department -> department.setOnboarding(true));
 
         return selectedDepartments.stream().map(departmentMapper::toResponse).toList();
+    }
+
+    public DepartmentResponse patchDepartment(Long id, DepartmentPatchRequest request) {
+        Department department = departmentRepository.findById(id).orElseThrow(() -> new ResourceDoesNotExistException("Department with id " + id + " does not exist"));
+
+        departmentMapper.patchFromDepartmentRequest(request, department);
+
+        Department saved = departmentRepository.save(department);
+
+        return departmentMapper.toResponse(saved);
     }
 }

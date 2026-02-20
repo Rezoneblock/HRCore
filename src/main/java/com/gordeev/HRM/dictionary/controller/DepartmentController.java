@@ -2,6 +2,7 @@ package com.gordeev.HRM.dictionary.controller;
 
 import com.gordeev.HRM.common.dto.ApiResponse;
 import com.gordeev.HRM.dictionary.dto.request.departments.DepartmentCreateRequest;
+import com.gordeev.HRM.dictionary.dto.request.departments.DepartmentPatchRequest;
 import com.gordeev.HRM.dictionary.dto.request.departments.SetOnboardingDepartmentsRequest;
 import com.gordeev.HRM.dictionary.dto.response.department.DepartmentResponse;
 import com.gordeev.HRM.dictionary.service.DepartmentService;
@@ -40,6 +41,13 @@ public class DepartmentController {
         );
 
         return ResponseEntity.ok(ApiResponse.success(pagedModel));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiResponse<DepartmentResponse>> patchDepartment(@PathVariable Long id, @RequestBody @Valid DepartmentPatchRequest request) {
+        DepartmentResponse result = departmentService.patchDepartment(id, request);
+
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 
     @PostMapping

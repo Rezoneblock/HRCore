@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,7 +58,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponse partialUpdateUser(Long id, UserUpdateRequest request) {
+    public UserResponse partialUpdateUser(UUID id, UserUpdateRequest request) {
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceDoesNotExistException("User with id: " + id + " does not exists"));
 
         if (request.login() != null) {
