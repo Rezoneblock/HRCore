@@ -1,10 +1,7 @@
 package com.gordeev.HRM.dictionary.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "dict_roles")
@@ -12,6 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +21,5 @@ public class Role {
     @Column(nullable = false, length = 200)
     private String name; // Админ, кадровик, глава IT отдела, сотрудник IT отдела, ...
 
-    @Column(length = 500)
-    private String description;
-
     private boolean isSystem = false;
-
-    private boolean active = true;
 }

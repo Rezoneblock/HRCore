@@ -28,20 +28,15 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<ApiResponse<EmployeeResponse>> createEmployee(@RequestBody @Valid EmployeeCreateRequest request) {
         EmployeeResponse employee = employeeService.createEmployee(request);
-        ApiResponse<EmployeeResponse> response = ApiResponse.success(employee);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(employee));
     }
-
-//    @PostMapping("/initiate")
-//    public ResponseEntity<ApiResponse<EmployeeResponse>> initiateCompany(@RequestBody @Valid )
 
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<EmployeeResponse>>> getAllEmployees() {
         List<EmployeeResponse> employees = employeeService.getAllEmployees();
-        ApiResponse<List<EmployeeResponse>> response = ApiResponse.success(employees);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(employees));
     }
 
     @GetMapping

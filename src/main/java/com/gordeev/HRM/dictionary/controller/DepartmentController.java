@@ -7,6 +7,11 @@ import com.gordeev.HRM.dictionary.dto.response.department.DepartmentResponse;
 import com.gordeev.HRM.dictionary.service.DepartmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,27 +24,35 @@ public class DepartmentController {
     private final DepartmentService departmentService;
 
     @GetMapping("/")
-    public ResponseEntity<ApiResponse<List<DepartmentResponse>>> getAllDepartments() {
-        List<DepartmentResponse> result = departmentService.getAllDepartments();
-        ApiResponse<List<DepartmentResponse>> response = ApiResponse.success(result);
+    public ResponseEntity<ApiResponse<PagedModel<DepartmentResponse>>> getAllDepartments(
+        @PageableDefault(size = 3, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
+    ) {
+        Page<DepartmentResponse> result = departmentService.getAllDepartments(pageable);
 
-        return ResponseEntity.ok(response);
+        PagedModel<DepartmentResponse> pagedModel = PagedModel.of(
+                result.getContent(),
+                new PagedModel.PageMetadata(
+                        result.getSize(),
+                        result.getNumber(),
+                        result.getTotalElements(),
+                        result.getTotalPages()
+                )
+        );
+
+        return ResponseEntity.ok(ApiResponse.success(pagedModel));
     }
 
     @PostMapping
     public ResponseEntity<ApiResponse<List<DepartmentResponse>>> createDepartment(@RequestBody List<@Valid DepartmentCreateRequest> request) {
         List<DepartmentResponse> result = departmentService.createDepartment(request);
-        ApiResponse<List<DepartmentResponse>> response = ApiResponse.success(result);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 
     @PostMapping("/set-onboarding")
     public ResponseEntity<ApiResponse<List<DepartmentResponse>>> setOnboardingDepartments(@RequestBody List<@Valid SetOnboardingDepartmentsRequest> request) {
         List<DepartmentResponse> result = departmentService.setOnboardingDepartments(request);
 
-        ApiResponse<List<DepartmentResponse>> response = ApiResponse.success(result);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 }

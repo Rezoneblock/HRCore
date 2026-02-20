@@ -26,9 +26,6 @@ public class Department {
     @Column(nullable = false, length = 200)
     private String name; // Администрирование информационных систем, отдел кадров, ...
 
-    @Column(length = 500)
-    private String description;
-
     @Column(nullable = false)
     private boolean active = true;
 
