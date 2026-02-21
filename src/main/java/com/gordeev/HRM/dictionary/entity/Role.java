@@ -18,6 +18,9 @@ public class Role {
     @Column(unique = true, nullable = false, length = 50)
     private String code; // ADMIN, HR, IT_HEAD, IT_EMPLOYEE, ...
 
+    @Column(unique = true, nullable = false)
+    private String department;
+
     @Column(nullable = false, length = 200)
     private String name; // Админ, кадровик, глава IT отдела, сотрудник IT отдела, ...
 

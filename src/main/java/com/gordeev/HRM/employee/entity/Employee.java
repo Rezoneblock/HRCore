@@ -1,6 +1,5 @@
 package com.gordeev.HRM.employee.entity;
 
-import com.gordeev.HRM.common.enums.EmployeeStatus;
 import com.gordeev.HRM.onboarding.entity.OnboardingTask;
 import com.gordeev.HRM.user.entity.User;
 import jakarta.persistence.*;

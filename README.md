@@ -1,5 +1,5 @@
 # HRM
-### HRM (Human Resource Managemen) project
+### HRM (Human Resource Management) project
 
 ## Стэк разработки:
 

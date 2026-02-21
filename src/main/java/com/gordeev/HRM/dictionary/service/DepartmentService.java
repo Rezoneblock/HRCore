@@ -25,7 +25,7 @@ import java.util.List;
 public class DepartmentService {
     private final DepartmentRepository departmentRepository;
     private final DepartmentMapper departmentMapper;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
     public Page<DepartmentResponse> searchDepartments(String code, Pageable pageable) {
         Page<Department> page;
@@ -43,27 +43,11 @@ public class DepartmentService {
     public List<DepartmentResponse> createDepartment(List<DepartmentCreateRequest> request) {
         List<Department> departments = request.stream().map(departmentMapper::toDepartment).toList();
 
-        if (!roleRepository.existsByCode("ADMIN")) {
-            Role role_admin = Role.builder()
-                    .code("ADMIN")
-                    .name("Администратор")
-                    .isSystem(true).build();
-
-            roleRepository.save(role_admin);
-        }
             departments.forEach(depart -> {
                 if (departmentRepository.existsByCode(depart.getCode())) {
                     throw new ResourceAlreadyExistsException("Department with code: " + depart.getCode() + " already exists");
                 }
-                Role role_employee = Role.builder()
-                        .code(depart.getCode() + "_EMPLOYEE")
-                        .name("Сотрудник отдела " + depart.getCode()).build();
-
-                Role role_head = Role.builder()
-                        .code(depart.getCode() + "_HEAD")
-                        .name("Начальник отдела " + depart.getCode()).build();
-
-                roleRepository.saveAll(List.of(role_employee, role_head));
+                roleService.createRoles(depart);
             });
 
         List<Department> saved = departments.stream().map(departmentRepository::save).toList();
@@ -71,6 +55,7 @@ public class DepartmentService {
         return saved.stream().map(departmentMapper::toResponse).toList();
     }
 
+    @Transactional
     public List<DepartmentResponse> setOnboardingDepartments(List<SetOnboardingDepartmentsRequest> request) {
         List<String> codes = request.stream().map(SetOnboardingDepartmentsRequest::codes).flatMap(List::stream).toList();
 
@@ -78,9 +63,12 @@ public class DepartmentService {
 
         selectedDepartments.forEach(department -> department.setOnboarding(true));
 
+        roleService.checkForAdmin();
+
         return selectedDepartments.stream().map(departmentMapper::toResponse).toList();
     }
 
+    @Transactional
     public DepartmentResponse patchDepartment(Long id, DepartmentPatchRequest request) {
         Department department = departmentRepository.findById(id).orElseThrow(() -> new ResourceDoesNotExistException("Department with id " + id + " does not exist"));
 
@@ -91,8 +79,11 @@ public class DepartmentService {
         return departmentMapper.toResponse(saved);
     }
 
+    @Transactional
     public void deleteDepartment(Long id) {
         Department department = departmentRepository.findById(id).orElseThrow(() -> new ResourceDoesNotExistException("Department with id " + id + " does not exist"));
+
+        roleService.deleteRoles(department.getCode());
 
         departmentRepository.delete(department);
     }
