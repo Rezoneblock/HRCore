@@ -13,8 +13,6 @@ public class DepartmentResponse {
 
     private String name; // Администрирование информационных систем, отдел кадров, ...
 
-    private String description;
-
     private boolean active;
 
     private User head;
