@@ -11,11 +11,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -26,40 +26,31 @@ public class UserController {
 
     // GET Users via pageable
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<UserResponse>>> getUsers(
+    public ResponseEntity<ApiResponse<PagedModel<UserResponse>>> getUsers(
+            @RequestParam String login,
             @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
     ) {
-        Page<UserResponse> page = userService.getUsersPageable(pageable);
-        ApiResponse<Page<UserResponse>> response = ApiResponse.success(page);
+        Page<UserResponse> page = userService.searchUsers(login, pageable);
 
-        return ResponseEntity.ok(response);
-    }
+        PagedModel<UserResponse> pagedModel = PagedModel.of(
+                page.getContent(),
+                new PagedModel.PageMetadata(
+                        page.getSize(),
+                        page.getNumber(),
+                        page.getTotalElements(),
+                        page.getTotalPages()
+                )
+        );
 
-    // GET User via login
-    @GetMapping("/{login}")
-    public ResponseEntity<ApiResponse<UserResponse>> getUserByEmail(@PathVariable String login) {
-        UserResponse user = userService.findByLogin(login);
-        ApiResponse<UserResponse> response = ApiResponse.success(user);
-
-        return ResponseEntity.ok(response);
-    }
-
-    // GET all Users
-    @GetMapping("/all")
-    public ResponseEntity<ApiResponse<List<UserResponse>>> getAllUsers() {
-        List<UserResponse> allUsers = userService.getAllUsers();
-        ApiResponse<List<UserResponse>> response = ApiResponse.success(allUsers);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(pagedModel));
     }
 
     // Create User
     @PostMapping
     public ResponseEntity<ApiResponse<UserResponse>> createUser(@RequestBody UserCreateRequest request) {
         UserResponse newUser = userService.createUser(request);
-        ApiResponse<UserResponse> response = ApiResponse.success(newUser);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(newUser));
     }
 
     // Patch User
@@ -67,9 +58,14 @@ public class UserController {
     public ResponseEntity<ApiResponse<UserResponse>> updateUser(@PathVariable UUID id, @RequestBody @Valid UserUpdateRequest request) {
         UserResponse user = userService.partialUpdateUser(id, request);
 
-        ApiResponse<UserResponse> response = ApiResponse.success(user);
+        return ResponseEntity.ok(ApiResponse.success(user));
+    }
 
-        return ResponseEntity.ok(response);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
+        userService.deleteUser(id);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -32,13 +32,6 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(employee));
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<ApiResponse<List<EmployeeResponse>>> getAllEmployees() {
-        List<EmployeeResponse> employees = employeeService.getAllEmployees();
-
-        return ResponseEntity.ok(ApiResponse.success(employees));
-    }
-
     @GetMapping
     public ResponseEntity<ApiResponse<PagedModel<EmployeeResponse>>> getEmployee(
             @RequestParam String fullName,

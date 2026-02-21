@@ -57,13 +57,6 @@ public class EmployeeService {
         return employeeMapper.toResponse(saved);
     }
 
-    public List<EmployeeResponse> getAllEmployees() {
-        return employeeRepository.findAll()
-                .stream()
-                .map(employeeMapper::toResponse)
-                .toList();
-    }
-
     public Page<EmployeeResponse> searchEmployees(String fullName, Pageable pageable) {
         Page<Employee> page;
 

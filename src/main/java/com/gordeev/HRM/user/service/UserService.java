@@ -15,9 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,26 +24,20 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public List<UserResponse> getAllUsers() {
-        return userRepository.findAll()
-                .stream()
-                .map(userMapper::toResponse)
-                .collect(Collectors.toList());
-    }
-
-    public Page<@NonNull UserResponse> getUsersPageable(Pageable pageable) {
+    public Page<@NonNull UserResponse> searchUsers(String login, Pageable pageable) {
         if (pageable == null) {
             throw new IllegalArgumentException("Pageable не может быть null");
         }
 
-        Page<@NonNull User> page = userRepository.findAll(pageable);
+        Page<User> page;
+
+        if (login != null && !login.trim().isEmpty()) {
+            page = userRepository.findByLogin(login, pageable);
+        } else {
+            page = userRepository.findAll(pageable);
+        }
 
         return page.map(userMapper::toResponse);
-    }
-
-    public UserResponse findByLogin(String login) {
-        User user = userRepository.findByLogin(login).orElseThrow(() -> new ResourceDoesNotExistException("User with login: " + login + " does not exists"));
-        return userMapper.toResponse(user);
     }
 
     @Transactional
@@ -76,5 +68,12 @@ public class UserService {
         User updatedUser = userRepository.save(user);
 
         return userMapper.toResponse(updatedUser);
+    }
+
+    @Transactional
+    public void deleteUser(UUID id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceDoesNotExistException("User with id: " + id + " does not exist"));
+
+        userRepository.delete(user);
     }
 }
