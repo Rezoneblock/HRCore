@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771690305118-5
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: service_number
+            constraintName: UC_EMPLOYEE_EMPLOYMENT_DETAILS_SERVICENUMBER
+            tableName: employee_employment_details
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            uniqueConstraintExists:
+              constraintName: UC_EMPLOYEE_EMPLOYMENT_DETAILS_SERVICENUMBER
+              tableName: employee_employment_details
+

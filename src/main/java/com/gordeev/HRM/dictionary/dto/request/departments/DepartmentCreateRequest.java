@@ -4,8 +4,6 @@ public record DepartmentCreateRequest(
 
  String code, // IT, FINANCE, HR, ...
 
- String name, // Администрирование информационных систем, отдел кадров, ...
-
- String description
+ String name // Администрирование информационных систем, отдел кадров, ...
 ) {
 }

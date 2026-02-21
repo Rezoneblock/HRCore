@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771690305118-4
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addPrimaryKey:
+            columnNames: id
+            constraintName: pk_users
+            tableName: users
+  - changeSet:
+      id: 1771690305118-6
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: head_user_id
+            baseTableName: dict_departments
+            constraintName: FK_DICT_DEPARTMENTS_ON_HEAD_USER
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1771690305118-7
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: assignee_id
+            baseTableName: onboarding_tasks
+            constraintName: FK_ONBOARDING_TASKS_ON_ASSIGNEE
+            referencedColumnNames: id
+            referencedTableName: users
+

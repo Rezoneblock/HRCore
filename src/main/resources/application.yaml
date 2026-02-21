@@ -1,9 +1,11 @@
 spring:
   application:
     name: postgresqlWithSpring
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
 
   datasource:
-#    jdbc:postgresql://185.73.126.208:5432/hrcore
     url: jdbc:postgresql://${DB_SERVER}:${DB_PORT}/${DB_NAME}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
@@ -18,10 +20,10 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
-        check_constraint_handling_mode: IGNORE
+        hbm2ddl.auto: validate
 
 #logging:
 #  level:

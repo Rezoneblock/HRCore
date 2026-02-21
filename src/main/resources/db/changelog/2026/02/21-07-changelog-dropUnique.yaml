@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771691083651-1
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropUniqueConstraint:
+            constraintName: uc_dict_roles_department
+            tableName: dict_roles
+

@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771687033366-6
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: active
+            tableName: dict_roles
+        - dropColumn:
+            columnName: description
+            tableName: dict_roles
+  - changeSet:
+      id: 1771687033366-7
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: description
+            tableName: dict_departments
+        - dropColumn:
+            columnName: head_user_id
+            tableName: dict_departments
+  - changeSet:
+      id: 1771687033366-8
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: assignee_id
+            tableName: onboarding_tasks
+  - changeSet:
+      id: 1771687033366-11
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: id
+            tableName: users
+

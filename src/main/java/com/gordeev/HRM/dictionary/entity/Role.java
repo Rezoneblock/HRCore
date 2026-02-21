@@ -18,7 +18,7 @@ public class Role {
     @Column(unique = true, nullable = false, length = 50)
     private String code; // ADMIN, HR, IT_HEAD, IT_EMPLOYEE, ...
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String department;
 
     @Column(nullable = false, length = 200)

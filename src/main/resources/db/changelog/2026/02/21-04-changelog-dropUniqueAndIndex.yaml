@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771687033366-17-drop-users-constraint
+      author: gordeev.tv
+      changes:
+        - dropUniqueConstraint:
+            constraintName: ukd1s31g1a7ilra77m65xmka3ei
+            tableName: users
+      preConditions:
+        - onFail: MARK_RAN
+        - uniqueConstraintExists:
+            constraintName: ukd1s31g1a7ilra77m65xmka3ei
+            tableName: users
+
+  - changeSet:
+      id: 1771687033366-17-drop-employee-constraint
+      author: gordeev.tv
+      changes:
+        - dropUniqueConstraint:
+            constraintName: uksv61ooq7f4llv72s5jtqns71c
+            tableName: employee_employment_details
+      preConditions:
+        - onFail: MARK_RAN
+        - uniqueConstraintExists:
+            constraintName: uksv61ooq7f4llv72s5jtqns71c
+            tableName: employee_employment_details

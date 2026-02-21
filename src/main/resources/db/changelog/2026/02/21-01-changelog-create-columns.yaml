@@ -1,0 +1,102 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771687033366-1
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: department
+                  type: VARCHAR(255)
+            tableName: dict_roles
+  - changeSet:
+      id: 1771687033366-9
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  constraints:
+                    foreignKeyName: FK_ONBOARDING_TASKS_ON_ASSIGNEE
+                    references: users(id)
+                  name: assignee_id
+                  type: UUID
+            tableName: onboarding_tasks
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            columnExists:
+              tableName: onboarding_tasks
+              columnName: assignee_id
+  - changeSet:
+      id: 1771687033366-10
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  constraints:
+                    foreignKeyName: FK_DICT_DEPARTMENTS_ON_HEAD_USER
+                    references: users(id)
+                  name: head_user_id
+                  type: UUID
+            tableName: dict_departments
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            columnExists:
+              tableName: onboarding_tasks
+              columnName: assignee_id
+  - changeSet:
+      id: 1771687033366-12
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_users
+                    validateNullable: true
+                  name: id
+                  type: UUID
+            tableName: users
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            columnExists:
+              tableName: onboarding_tasks
+              columnName: assignee_id
+  - changeSet:
+      id: 1771687033366-13
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropNotNullConstraint:
+            columnDataType: varchar(6)
+            columnName: passport_number
+            tableName: employee_personal_data
+  - changeSet:
+      id: 1771687033366-14
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropNotNullConstraint:
+            columnDataType: varchar(4)
+            columnName: passport_series
+            tableName: employee_personal_data
+  - changeSet:
+      id: 1771687033366-16
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropNotNullConstraint:
+            columnDataType: varchar(3)
+            columnName: sex
+            tableName: employee_personal_data
+

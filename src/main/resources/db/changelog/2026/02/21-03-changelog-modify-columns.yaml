@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771687033366-2
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addNotNullConstraint:
+            columnName: department
+            tableName: dict_roles
+  - changeSet:
+      id: 1771687033366-3
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: department
+            constraintName: UC_DICT_ROLES_DEPARTMENT
+            tableName: dict_roles
+  - changeSet:
+      id: 1771687033366-15
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - modifyDataType:
+            columnName: salary
+            newDataType: DECIMAL
+            tableName: employee_employment_details
+

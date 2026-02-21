@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id:  1
+      author:  gordeev timur
+      changes:
+        -  empty:  {}
+  - includeAll:
+      path: 2026/
+      relativeToChangelogFile: true
+      errorIfMissingOrEmpty: false

@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771690305118-1
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: assignee_id
+                  type: UUID
+            tableName: onboarding_tasks
+  - changeSet:
+      id: 1771690305118-2
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: head_user_id
+                  type: UUID
+            tableName: dict_departments
+  - changeSet:
+      id: 1771690305118-3
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+            tableName: users
+
