@@ -17,12 +17,12 @@ public class RoleService {
 
     public void createRoles(Department department) {
         Role role_employee = Role.builder()
-                .code(department.getCode() + "_EMPLOYEE")
+                .code(department.getCode() + "_employee")
                 .department(department.getCode())
                 .name("Сотрудник отдела " + department.getCode()).build();
 
         Role role_head = Role.builder()
-                .code(department.getCode() + "_HEAD")
+                .code(department.getCode() + "_head")
                 .department(department.getCode())
                 .name("Начальник отдела " + department.getCode()).build();
 
@@ -32,7 +32,7 @@ public class RoleService {
     public void checkForAdmin() {
         if (!roleRepository.existsByCode("ADMIN")) {
             Role role_admin = Role.builder()
-                    .code("ADMIN")
+                    .code("admin")
                     .name("Администратор")
                     .department("IT")
                     .isSystem(true).build();

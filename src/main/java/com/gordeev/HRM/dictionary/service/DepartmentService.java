@@ -43,7 +43,7 @@ public class DepartmentService {
     public List<DepartmentResponse> createDepartment(List<DepartmentCreateRequest> request) {
         List<Department> departments = request.stream().map(departmentMapper::toDepartment).toList();
 
-            departments.forEach(depart -> {
+        departments.forEach(depart -> {
                 if (departmentRepository.existsByCode(depart.getCode())) {
                     throw new ResourceAlreadyExistsException("Department with code: " + depart.getCode() + " already exists");
                 }
