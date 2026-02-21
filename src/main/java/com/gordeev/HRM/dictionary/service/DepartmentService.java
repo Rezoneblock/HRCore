@@ -27,8 +27,14 @@ public class DepartmentService {
     private final DepartmentMapper departmentMapper;
     private final RoleRepository roleRepository;
 
-    public Page<DepartmentResponse> getAllDepartments(Pageable pageable) {
-        Page<Department> page = departmentRepository.findAll(pageable);
+    public Page<DepartmentResponse> searchDepartments(String code, Pageable pageable) {
+        Page<Department> page;
+
+        if (code != null && !code.trim().isEmpty()) {
+            page = departmentRepository.findByCode(code, pageable);
+        } else {
+            page = departmentRepository.findAll(pageable);
+        }
 
         return page.map(departmentMapper::toResponse);
     }
@@ -83,5 +89,11 @@ public class DepartmentService {
         Department saved = departmentRepository.save(department);
 
         return departmentMapper.toResponse(saved);
+    }
+
+    public void deleteDepartment(Long id) {
+        Department department = departmentRepository.findById(id).orElseThrow(() -> new ResourceDoesNotExistException("Department with id " + id + " does not exist"));
+
+        departmentRepository.delete(department);
     }
 }

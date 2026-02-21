@@ -26,9 +26,10 @@ public class DepartmentController {
 
     @GetMapping("/")
     public ResponseEntity<ApiResponse<PagedModel<DepartmentResponse>>> getAllDepartments(
-        @PageableDefault(size = 3, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
+            @RequestParam String code,
+            @PageableDefault(size = 3, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
     ) {
-        Page<DepartmentResponse> result = departmentService.getAllDepartments(pageable);
+        Page<DepartmentResponse> result = departmentService.searchDepartments(code, pageable);
 
         PagedModel<DepartmentResponse> pagedModel = PagedModel.of(
                 result.getContent(),
@@ -55,6 +56,13 @@ public class DepartmentController {
         List<DepartmentResponse> result = departmentService.createDepartment(request);
 
         return ResponseEntity.ok(ApiResponse.success(result));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDepartment(@PathVariable Long id) {
+        departmentService.deleteDepartment(id);
+
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/set-onboarding")
