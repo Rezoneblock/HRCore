@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-service-number-seq
+      author: gordeev.tv
+      changes:
+        - createSequence:
+            sequenceName: employee_service_number_seq
+            startValue: 1
+            incrementBy: 1
+
+  - changeSet:
+      id: add-default-service-number
+      author: gordeev.tv
+      changes:
+        - addDefaultValue:
+            tableName: employee_employment_details
+            columnName: service_number
+            defaultValueSequenceNext: employee_service_number_seq
