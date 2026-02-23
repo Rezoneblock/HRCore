@@ -30,7 +30,7 @@ public class RoleService {
     }
 
     public void checkForAdmin() {
-        if (!roleRepository.existsByCode("ADMIN")) {
+        if (!roleRepository.existsByCode("admin")) {
             Role role_admin = Role.builder()
                     .code("admin")
                     .name("Администратор")

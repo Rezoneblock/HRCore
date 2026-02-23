@@ -18,5 +18,6 @@ public class EmploymentMode {
     @Column(unique = true, nullable = false, length = 50)
     private String code; // REMOTE, OFFICE, HYBRID, ...
 
-    private boolean active = true;
+    @Column(nullable = false)
+    private Boolean active = true;
 }

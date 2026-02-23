@@ -5,7 +5,6 @@ import lombok.Builder;
 @Builder
 public record EmploymentModeResponse(
         String code, // REMOTE, OFFICE, HYBRID, ...
-        String name, // Удаленно, в офисе, гибрид, ...
-        boolean active
+        Boolean active
 ) {
 }

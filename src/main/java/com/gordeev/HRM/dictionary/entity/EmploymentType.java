@@ -18,5 +18,6 @@ public class EmploymentType {
     @Column(unique = true, nullable = false, length = 50)
     private String code; // FULLTIME, PARTTIME, ...
 
-    private boolean active = true;
+    @Column(nullable = false)
+    private Boolean active = true;
 }

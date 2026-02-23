@@ -1,4 +1,4 @@
-package com.gordeev.HRM.dictionary.dto.request.EmploymentTypesCreateRequest;
+package com.gordeev.HRM.dictionary.dto.request.EmploymentTypes;
 
 import java.util.List;
 

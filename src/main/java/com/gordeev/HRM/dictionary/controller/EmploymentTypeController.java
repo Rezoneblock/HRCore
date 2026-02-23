@@ -1,7 +1,7 @@
 package com.gordeev.HRM.dictionary.controller;
 
 import com.gordeev.HRM.common.dto.ApiResponse;
-import com.gordeev.HRM.dictionary.dto.request.EmploymentTypesCreateRequest.EmploymentTypesCreateRequest;
+import com.gordeev.HRM.dictionary.dto.request.EmploymentTypes.EmploymentTypesCreateRequest;
 import com.gordeev.HRM.dictionary.dto.response.employmentType.EmploymentTypeResponse;
 import com.gordeev.HRM.dictionary.service.EmploymentModeService;
 import com.gordeev.HRM.dictionary.service.EmploymentTypeService;

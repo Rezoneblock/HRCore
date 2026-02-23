@@ -26,10 +26,10 @@ public class EmploymentModeService {
         List<EmploymentMode> employmentModes = new ArrayList<>();
 
         request.codes().forEach(code -> {
-            if (employmentModeRepository.existsByCode(code)) {
+            if (employmentModeRepository.existsByCode(code.toLowerCase())) {
                 throw new ResourceAlreadyExistsException("Employment mode with code " + code + " already exists");
             }
-            employmentModes.add(EmploymentMode.builder().code(code).build());
+            employmentModes.add(EmploymentMode.builder().code(code.toLowerCase()).active(true).build());
         });
 
         List<EmploymentMode> saved = employmentModeRepository.saveAll(employmentModes);
@@ -43,10 +43,10 @@ public class EmploymentModeService {
 
     @Transactional
     public void deleteEmploymentMode(String code) {
-        if (!employmentModeRepository.existsByCode(code)) {
-            throw new ResourceDoesNotExistException("EmploymentMode with code " + code + " does not exist");
+        if (!employmentModeRepository.existsByCode(code.toLowerCase())) {
+            throw new ResourceDoesNotExistException("EmploymentMode with code " + code.toLowerCase() + " does not exist");
         }
-        EmploymentMode employmentMode = employmentModeRepository.findByCode(code);
+        EmploymentMode employmentMode = employmentModeRepository.findByCode(code.toLowerCase());
         employmentModeRepository.delete(employmentMode);
     }
 }

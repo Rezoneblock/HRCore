@@ -27,10 +27,10 @@ public class Department {
     private String name; // Администрирование информационных систем, отдел кадров, ...
 
     @Column(nullable = false)
-    private boolean active = true;
+    private Boolean active = true;
 
     @Column(nullable = false)
-    private boolean isOnboarding = false;
+    private Boolean isOnboarding = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "head_user_id")

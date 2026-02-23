@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: make-employment-types-status-not-null
+      author: gordeev.tv
+      changes:
+        - addNotNullConstraint:
+            tableName: dict_employment_types
+            columnName: active
+  - changeSet:
+      id: make-employment-modes-status-not-null
+      author: gordeev.tv
+      changes:
+        - addNotNullConstraint:
+            tableName: dict_employment_modes
+            columnName: active

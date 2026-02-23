@@ -57,7 +57,7 @@ public class DepartmentService {
     public List<DepartmentResponse> setOnboardingDepartments(SetOnboardingDepartmentsRequest request) {
         List<Department> selectedDepartments = departmentRepository.findByCodeIn(request.codes());
 
-        selectedDepartments.forEach(department -> department.setOnboarding(true));
+        selectedDepartments.forEach(department -> department.setIsOnboarding(true));
 
         roleService.checkForAdmin();
 

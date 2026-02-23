@@ -13,7 +13,9 @@ public class DepartmentResponse {
 
     private String name; // Администрирование информационных систем, отдел кадров, ...
 
-    private boolean active;
+    private Boolean active;
+
+    private Boolean isOnboarding;
 
     private User head;
 }

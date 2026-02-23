@@ -2,7 +2,7 @@ package com.gordeev.HRM.dictionary.service;
 
 import com.gordeev.HRM.common.exception.ResourceAlreadyExistsException;
 import com.gordeev.HRM.common.exception.ResourceDoesNotExistException;
-import com.gordeev.HRM.dictionary.dto.request.EmploymentTypesCreateRequest.EmploymentTypesCreateRequest;
+import com.gordeev.HRM.dictionary.dto.request.EmploymentTypes.EmploymentTypesCreateRequest;
 import com.gordeev.HRM.dictionary.dto.response.employmentType.EmploymentTypeResponse;
 import com.gordeev.HRM.dictionary.entity.EmploymentType;
 import com.gordeev.HRM.dictionary.mapper.EmploymentTypeMapper;
@@ -26,10 +26,11 @@ public class EmploymentTypeService {
         List<EmploymentType> employmentTypes = new ArrayList<>();
 
         request.codes().forEach(code -> {
-            if (employmentTypeRepository.existsByCode(code)) {
+            if (employmentTypeRepository.existsByCode(code.toLowerCase())) {
                 throw new ResourceAlreadyExistsException("Employment mode with code " + code + " already exists");
             }
-            employmentTypes.add(EmploymentType.builder().code(code).build());
+            EmploymentType employmentType = EmploymentType.builder().code(code.toLowerCase()).active(true).build();
+            employmentTypes.add(employmentType);
         });
 
         List<EmploymentType> saved = employmentTypeRepository.saveAll(employmentTypes);
@@ -43,10 +44,10 @@ public class EmploymentTypeService {
 
     @Transactional
     public void deleteEmploymentType(String code) {
-        if (!employmentTypeRepository.existsByCode(code)) {
-            throw new ResourceDoesNotExistException("EmploymentType with code " + code + " does not exist");
+        if (!employmentTypeRepository.existsByCode(code.toLowerCase())) {
+            throw new ResourceDoesNotExistException("EmploymentType with code " + code.toLowerCase() + " does not exist");
         }
-        EmploymentType employmentType = employmentTypeRepository.findByCode(code);
+        EmploymentType employmentType = employmentTypeRepository.findByCode(code.toLowerCase());
         employmentTypeRepository.delete(employmentType);
     }
 }
