@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771854116562-1
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: description
+            tableName: dict_employment_modes
+  - changeSet:
+      id: 1771854116562-2
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: description
+            tableName: dict_employment_types
+

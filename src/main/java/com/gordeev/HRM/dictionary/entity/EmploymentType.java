@@ -20,11 +20,5 @@ public class EmploymentType {
     @Column(unique = true, nullable = false, length = 50)
     private String code; // FULLTIME, PARTTIME, ...
 
-    @Column(nullable = false, length = 200)
-    private String name; // Полный рабочий день, частичная занятость, ...
-
-    @Column(length = 500)
-    private String description;
-
     private boolean active = true;
 }

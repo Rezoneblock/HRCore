@@ -20,11 +20,5 @@ public class EmploymentMode {
     @Column(unique = true, nullable = false, length = 50)
     private String code; // REMOTE, OFFICE, HYBRID, ...
 
-    @Column(nullable = false, length = 200)
-    private String name; // Удаленно, в офисе, гибрид, ...
-
-    @Column(length = 500)
-    private String description;
-
     private boolean active = true;
 }

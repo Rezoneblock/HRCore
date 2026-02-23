@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771854116562-3
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - modifyDataType:
+            columnName: salary
+            newDataType: DECIMAL
+            tableName: employee_employment_details
+
