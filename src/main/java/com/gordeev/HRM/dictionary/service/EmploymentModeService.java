@@ -35,4 +35,8 @@ public class EmploymentModeService {
 
         return saved.stream().map(employmentModeMapper::toResponse).toList();
     }
+
+    public List<EmploymentModeResponse> getEmploymentModes() {
+        return employmentModeRepository.findAll().stream().map(employmentModeMapper::toResponse).toList();
+    }
 }

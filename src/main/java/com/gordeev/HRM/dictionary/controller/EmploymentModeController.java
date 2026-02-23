@@ -3,14 +3,12 @@ package com.gordeev.HRM.dictionary.controller;
 import com.gordeev.HRM.common.dto.ApiResponse;
 import com.gordeev.HRM.dictionary.dto.request.employmentMode.EmploymentModesCreateRequest;
 import com.gordeev.HRM.dictionary.dto.response.employmentMode.EmploymentModeResponse;
+import com.gordeev.HRM.dictionary.repository.EmploymentModeRepository;
 import com.gordeev.HRM.dictionary.service.EmploymentModeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +21,13 @@ public class EmploymentModeController {
     @PostMapping
     public ResponseEntity<ApiResponse<List<EmploymentModeResponse>>> createEmploymentModes(@RequestBody @Valid EmploymentModesCreateRequest request) {
         List<EmploymentModeResponse> result = employmentModeService.createEmploymentModes(request);
+
+        return ResponseEntity.ok(ApiResponse.success(result));
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<EmploymentModeResponse>>> getEmploymentModes() {
+        List<EmploymentModeResponse> result = employmentModeService.getEmploymentModes();
 
         return ResponseEntity.ok(ApiResponse.success(result));
     }
