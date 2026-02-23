@@ -1,6 +1,7 @@
 package com.gordeev.HRM.dictionary.service;
 
 import com.gordeev.HRM.common.exception.ResourceAlreadyExistsException;
+import com.gordeev.HRM.common.exception.ResourceDoesNotExistException;
 import com.gordeev.HRM.dictionary.dto.request.employmentMode.EmploymentModesCreateRequest;
 import com.gordeev.HRM.dictionary.dto.response.employmentMode.EmploymentModeResponse;
 import com.gordeev.HRM.dictionary.entity.EmploymentMode;
@@ -38,5 +39,14 @@ public class EmploymentModeService {
 
     public List<EmploymentModeResponse> getEmploymentModes() {
         return employmentModeRepository.findAll().stream().map(employmentModeMapper::toResponse).toList();
+    }
+
+    @Transactional
+    public void deleteEmploymentMode(String code) {
+        if (!employmentModeRepository.existsByCode(code)) {
+            throw new ResourceDoesNotExistException("EmploymentMode with code " + code + " does not exist");
+        }
+        EmploymentMode employmentMode = employmentModeRepository.findByCode(code);
+        employmentModeRepository.delete(employmentMode);
     }
 }
