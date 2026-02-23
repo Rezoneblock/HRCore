@@ -66,7 +66,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/set-onboarding")
-    public ResponseEntity<ApiResponse<List<DepartmentResponse>>> setOnboardingDepartments(@RequestBody List<@Valid SetOnboardingDepartmentsRequest> request) {
+    public ResponseEntity<ApiResponse<List<DepartmentResponse>>> setOnboardingDepartments(@RequestBody @Valid SetOnboardingDepartmentsRequest request) {
         List<DepartmentResponse> result = departmentService.setOnboardingDepartments(request);
 
         return ResponseEntity.ok(ApiResponse.success(result));

@@ -7,10 +7,8 @@ import com.gordeev.HRM.dictionary.dto.request.departments.DepartmentPatchRequest
 import com.gordeev.HRM.dictionary.dto.request.departments.SetOnboardingDepartmentsRequest;
 import com.gordeev.HRM.dictionary.dto.response.department.DepartmentResponse;
 import com.gordeev.HRM.dictionary.entity.Department;
-import com.gordeev.HRM.dictionary.entity.Role;
 import com.gordeev.HRM.dictionary.mapper.DepartmentMapper;
 import com.gordeev.HRM.dictionary.repository.DepartmentRepository;
-import com.gordeev.HRM.dictionary.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -56,10 +54,8 @@ public class DepartmentService {
     }
 
     @Transactional
-    public List<DepartmentResponse> setOnboardingDepartments(List<SetOnboardingDepartmentsRequest> request) {
-        List<String> codes = request.stream().map(SetOnboardingDepartmentsRequest::codes).flatMap(List::stream).toList();
-
-        List<Department> selectedDepartments = departmentRepository.findByCodeIn(codes);
+    public List<DepartmentResponse> setOnboardingDepartments(SetOnboardingDepartmentsRequest request) {
+        List<Department> selectedDepartments = departmentRepository.findByCodeIn(request.codes());
 
         selectedDepartments.forEach(department -> department.setOnboarding(true));
 

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmploymentTypeRepository extends JpaRepository<EmploymentType, Long> {
+    Boolean existsByCode(String code);
 }
