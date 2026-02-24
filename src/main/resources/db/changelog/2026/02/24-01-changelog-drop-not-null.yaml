@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771938584007-1
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropNotNullConstraint:
+            columnDataType: bigint
+            columnName: service_number
+            tableName: employee_employment_details
+

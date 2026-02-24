@@ -4,10 +4,7 @@ import com.gordeev.HRM.employee.dto.EmployeeCreateRequest;
 import com.gordeev.HRM.employee.dto.EmployeeResponse;
 import com.gordeev.HRM.employee.dto.EmployeeUpdateRequest;
 import com.gordeev.HRM.employee.entity.Employee;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface EmployeeMapper {

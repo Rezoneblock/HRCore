@@ -49,6 +49,6 @@ public class EmploymentDetails {
     @Column(nullable = false)
     private EmployeeStatus status;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private Long serviceNumber;
 }

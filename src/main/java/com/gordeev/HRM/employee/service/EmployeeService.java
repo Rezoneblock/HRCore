@@ -2,6 +2,9 @@ package com.gordeev.HRM.employee.service;
 
 import com.gordeev.HRM.common.exception.ResourceAlreadyExistsException;
 import com.gordeev.HRM.common.exception.ResourceDoesNotExistException;
+import com.gordeev.HRM.dictionary.repository.DepartmentRepository;
+import com.gordeev.HRM.dictionary.repository.EmploymentModeRepository;
+import com.gordeev.HRM.dictionary.repository.EmploymentTypeRepository;
 import com.gordeev.HRM.employee.dto.EmployeeCreateRequest;
 import com.gordeev.HRM.employee.dto.EmployeeResponse;
 import com.gordeev.HRM.employee.dto.EmployeeUpdateRequest;
@@ -10,6 +13,7 @@ import com.gordeev.HRM.employee.mapper.EmployeeMapper;
 import com.gordeev.HRM.employee.repository.EmployeeRepository;
 import com.gordeev.HRM.user.dto.request.UserCreateRequest;
 import com.gordeev.HRM.user.service.UserService;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +30,9 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
     private final UserService userService;
+    private final DepartmentRepository departmentRepository;
+    private final EmploymentTypeRepository employmentTypeRepository;
+    private final EmploymentModeRepository employmentModeRepository;
 
     @Transactional
     public EmployeeResponse createEmployee(EmployeeCreateRequest request) {
@@ -44,6 +51,19 @@ public class EmployeeService {
         if (employee.getEmploymentDetails() != null) {
             employee.getEmploymentDetails().setEmployee(employee);
         }
+
+        assert employee.getEmploymentDetails() != null;
+        if (!departmentRepository.existsByCode(employee.getEmploymentDetails().getDepartment())) {
+            throw new ResourceDoesNotExistException("Department with code " + departmentRepository.existsByCode(employee.getEmploymentDetails().getDepartment()) + " does not exist");
+        }
+        if (!employmentModeRepository.existsByCode(employee.getEmploymentDetails().getWorkFrom())) {
+            throw new ResourceDoesNotExistException("WorkFrom with code " + employmentModeRepository.existsByCode(employee.getEmploymentDetails().getWorkFrom()) + " does not exist");
+        }
+        if (!employmentTypeRepository.existsByCode(employee.getEmploymentDetails().getEmploymentType())) {
+            throw new ResourceDoesNotExistException("EmploymentType with code " + employmentTypeRepository.existsByCode(employee.getEmploymentDetails().getEmploymentType()) + " does not exist");
+        }
+
+        System.out.println(employee.getCreatedAt());
 
         Employee saved = employeeRepository.save(employee);
 

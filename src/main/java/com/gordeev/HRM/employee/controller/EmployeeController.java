@@ -55,7 +55,7 @@ public class EmployeeController {
     @PatchMapping("/{id}")
     public ResponseEntity<ApiResponse<EmployeeResponse>> patchEmployee(
             @PathVariable UUID id,
-            @RequestBody EmployeeUpdateRequest request
+            @RequestBody @Valid EmployeeUpdateRequest request
             ) {
         EmployeeResponse updatedEmployee =  employeeService.partialEmployeeUpdate(id, request);
 
