@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.generator.EventType;
+
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -49,6 +53,7 @@ public class EmploymentDetails {
     @Column(nullable = false)
     private EmployeeStatus status;
 
-    @Column(unique = true)
+    @Column(name = "service_number", insertable = false, updatable = false)
+    @Generated
     private Long serviceNumber;
 }

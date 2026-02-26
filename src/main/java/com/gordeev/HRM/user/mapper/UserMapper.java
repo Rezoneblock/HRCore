@@ -4,6 +4,7 @@ import com.gordeev.HRM.user.dto.request.UserCreateRequest;
 import com.gordeev.HRM.user.dto.request.UserUpdateRequest;
 import com.gordeev.HRM.user.dto.response.UserResponse;
 import com.gordeev.HRM.user.entity.User;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;

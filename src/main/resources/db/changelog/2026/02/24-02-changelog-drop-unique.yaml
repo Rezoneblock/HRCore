@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771941821093-1
+      author: gordeev.tv (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropUniqueConstraint:
+            constraintName: uc_employee_employment_details_servicenumber
+            tableName: employee_employment_details
+

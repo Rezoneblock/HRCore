@@ -34,6 +34,7 @@ public class User {
 
     private Set<String> roles;
 
+    @Builder.Default
     @Column(nullable = false)
     private Boolean active = false;
 

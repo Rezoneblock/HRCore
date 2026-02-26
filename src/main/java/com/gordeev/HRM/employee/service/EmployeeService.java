@@ -13,10 +13,15 @@ import com.gordeev.HRM.employee.mapper.EmployeeMapper;
 import com.gordeev.HRM.employee.repository.EmployeeRepository;
 import com.gordeev.HRM.user.dto.request.UserCreateRequest;
 import com.gordeev.HRM.user.service.UserService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.server.EntityLinks;
+import org.springframework.plugin.core.OrderAwarePluginRegistry;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +38,11 @@ public class EmployeeService {
     private final DepartmentRepository departmentRepository;
     private final EmploymentTypeRepository employmentTypeRepository;
     private final EmploymentModeRepository employmentModeRepository;
+    @PersistenceContext
+    private final EntityManager entityManager;
+
+    @Qualifier("entityLinksPluginRegistry")
+    private final OrderAwarePluginRegistry<EntityLinks, Class<?>> entityLinksPluginRegistry;
 
     @Transactional
     public EmployeeResponse createEmployee(EmployeeCreateRequest request) {
@@ -63,16 +73,17 @@ public class EmployeeService {
             throw new ResourceDoesNotExistException("EmploymentType with code " + employmentTypeRepository.existsByCode(employee.getEmploymentDetails().getEmploymentType()) + " does not exist");
         }
 
-        System.out.println(employee.getCreatedAt());
-
         Employee saved = employeeRepository.save(employee);
+
+        entityManager.flush();
+        entityManager.refresh(saved);
 
         UserCreateRequest userCreateRequest = UserCreateRequest.builder()
                 .login(saved.getContacts().getEmail())
                 .fullName(saved.getPersonalData().getFullName())
                 .build();
 
-        userService.createUser(userCreateRequest);
+        userService.createUser(userCreateRequest, saved);
 
         return employeeMapper.toResponse(saved);
     }

@@ -1,6 +1,7 @@
 package com.gordeev.HRM.user.service;
 
 import com.gordeev.HRM.common.exception.ResourceDoesNotExistException;
+import com.gordeev.HRM.employee.entity.Employee;
 import com.gordeev.HRM.user.dto.request.UserCreateRequest;
 import com.gordeev.HRM.user.dto.request.UserUpdateRequest;
 import com.gordeev.HRM.user.dto.response.UserResponse;
@@ -41,8 +42,16 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponse createUser(UserCreateRequest request) {
+    public UserResponse createUser(UserCreateRequest request, Employee employee) {
         User user = userMapper.toUser(request);
+
+        if (employee != null) {
+            user.setEmployee(employee);
+        }
+
+        if (userRepository.existsByLogin(user.getLogin())) {
+            throw new ResourceAlreadyExistsException("User with login " + user.getLogin() + " already exist");
+        }
 
         User savedUser = userRepository.save(user);
 
