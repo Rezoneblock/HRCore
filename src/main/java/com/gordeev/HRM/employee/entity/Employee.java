@@ -1,6 +1,4 @@
 package com.gordeev.HRM.employee.entity;
-
-import com.gordeev.HRM.onboarding.entity.OnboardingTask;
 import com.gordeev.HRM.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,8 +7,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -24,9 +20,6 @@ public class Employee {
     @Id
     @GeneratedValue
     private UUID id;
-
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OnboardingTask> onboardingTasks = new ArrayList<>();
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private EmployeePersonalData personalData;
@@ -66,13 +59,6 @@ public class Employee {
         this.employmentDetails = details;
         if (details != null) {
             details.setEmployee(this);
-        }
-    }
-
-    public void addOnboardingTask(OnboardingTask task) {
-        this.onboardingTasks.add(task);
-        if (task != null) {
-            task.setEmployee(this);
         }
     }
 

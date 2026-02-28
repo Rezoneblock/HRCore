@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/employment-types")
+@RequestMapping("/api/v1/employment-types")
 @RequiredArgsConstructor
 public class EmploymentTypeController {
     private final EmploymentTypeService employmentTypeService;

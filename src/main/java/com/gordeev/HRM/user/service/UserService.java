@@ -33,6 +33,9 @@ public class UserService {
         Page<User> page;
 
         if (login != null && !login.trim().isEmpty()) {
+            if (!userRepository.existsByLogin(login)) {
+                throw new ResourceDoesNotExistException("User with login " + login + " does not exist");
+            }
             page = userRepository.findByLogin(login, pageable);
         } else {
             page = userRepository.findAll(pageable);
